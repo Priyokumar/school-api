@@ -36,358 +36,401 @@ import com.school.api.student.entity.StudentGuardian;
 @Service
 public class StudentService {
 
-	@Autowired
-	private CommonService commonService;
+    @Autowired
+    private CommonService commonService;
 
-	public StudentsResponseDTO findAllStudents(StudentRequestParam param) {
+    public StudentsResponseDTO findAllStudents(StudentRequestParam param) {
 
-		StudentsResponseDTO res = new StudentsResponseDTO();
-		
-		Map<String, Object> params = new HashMap<String, Object>();
-		
-		param.getAadhaarNo();
-		param.getBloodGroup();
-		param.getClass();
-		param.getCommunity();
-		param.getDob();
-		param.getFirstName();
-		param.getGender();
-		param.getJoiningDate();
-		param.getLastName();
-		param.getMiddleName();
-		param.getNationality();
-		param.getPhysicallyChallenged();
-		param.getRegistrationDate();
-		param.getRegistrationNo();
-		if(ScUtil.isAllPresent())
-		
-		 /* List<Filter> filters = null; if (allParams != null && !allParams.isEmpty()) {
-		  
-		  filters = new ArrayList<Filter>();
-		  
-		  for (Entry<String, String> entry : allParams.entrySet()) { String key =
-		  entry.getKey(); String value = entry.getValue(); filters.add(new Filter(key,
-		  Operator.EQUAL, FieldType.STRING, value)); } }
-		  
-		  
-		  
-		  List<Student> students = null; if (!ScUtil.isAllPresent(filters)) students =
-		  commonService.findAll(Student.class); else students =
-		  commonService.find(filters, Student.class);
-		  
-		  List<StudentDTO> dtoStudents = new ArrayList<>(); students.forEach(student ->
-		  { dtoStudents.add(setStudentToDto(student)); });*/
-		 
-		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
-		res.setData(null);
-		return res;
-	}
+        StudentsResponseDTO res = new StudentsResponseDTO();
+        Map<String, Object> params = getParamObjectMap(param);
+        List<Filter> filters = null;
+        if (params != null && !params.isEmpty()) {
+            filters = new ArrayList<>();
+            for (Entry<String, Object> entry : params.entrySet()) {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                filters.add(new Filter(key, Operator.EQUAL, FieldType.STRING, value));
+            }
+        }
+        List<Student> students = null;
+        if (!ScUtil.isAllPresent(filters))
+            students = commonService.findAll(Student.class);
+        else
+            students = commonService.find(filters, Student.class);
 
-	public StudentsResponseDTO findStudentsByStandard(String standard) {
+        List<StudentDTO> dtoStudents = new ArrayList<>();
+        students.forEach(student -> {
+            dtoStudents.add(setStudentToDto(student));
+        });
 
-		StudentsResponseDTO res = new StudentsResponseDTO();
+        res.setApiMessage(ApiUtilDTO.okMessage("Success"));
+        res.setData(dtoStudents);
+        return res;
+    }
 
-		List<Filter> filters = Arrays.asList(new Filter("standard", Operator.EQUAL, FieldType.STRING, standard));
-		List<Student> students = commonService.find(filters, Student.class);
+    private Map<String, Object> getParamObjectMap(StudentRequestParam param) {
+        Map<String, Object> params = new HashMap<String, Object>();
 
-		List<StudentDTO> dtoStudents = new ArrayList<>();
-		students.forEach(student -> {
-			dtoStudents.add(setStudentToDto(student));
-		});
+        final String aadhaarNo = param.getAadhaarNo();
+        final String bloodGroup = param.getBloodGroup();
+        final String community = param.getCommunity();
+        final String dob = param.getDob();
+        final String firstName = param.getFirstName();
+        final String gender = param.getGender();
+        final String joiningDate = param.getJoiningDate();
+        final String lastName = param.getLastName();
+        final String middleName = param.getMiddleName();
+        final String nationality = param.getNationality();
+        final Boolean physicallyChallenged = param.getPhysicallyChallenged();
+        final String registrationDate = param.getRegistrationDate();
+        final String registrationNo = param.getRegistrationNo();
 
-		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
-		res.setData(dtoStudents);
-		return res;
-	}
+        if (ScUtil.isAllPresent(aadhaarNo))
+            params.put("aadhaarNo", aadhaarNo);
 
-	public StudentResponseDTO findStudent(Long id) {
+        if (ScUtil.isAllPresent(bloodGroup))
+            params.put("bloodGroup", bloodGroup);
 
-		StudentResponseDTO res = new StudentResponseDTO();
-		Student student = commonService.findById(id, Student.class);
+        if (ScUtil.isAllPresent(community))
+            params.put("community", community);
 
-		if (!ScUtil.isAllPresent(student))
-			throw new NotFoundException("No Student can be found !");
+        if (ScUtil.isAllPresent(dob))
+            params.put("dob", dob);
 
-		StudentDTO studentDto = setStudentToDto(student);
+        if (ScUtil.isAllPresent(firstName))
+            params.put("firstName", firstName);
 
-		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
-		res.setData(studentDto);
+        if (ScUtil.isAllPresent(gender))
+            params.put("gender", gender);
 
-		return res;
-	}
+        if (ScUtil.isAllPresent(joiningDate))
+            params.put("joiningDate", joiningDate);
 
-	public ActionResponseDTO createOrUpdateStudent(StudentDTO dtoStudent, String id) {
+        if (ScUtil.isAllPresent(lastName))
+            params.put("lastName", lastName);
 
-		ActionResponseDTO res = new ActionResponseDTO();
+        if (ScUtil.isAllPresent(middleName))
+            params.put("middleName", middleName);
 
-		Student student = setDtoToStudent(dtoStudent, id);
+        if (ScUtil.isAllPresent(nationality))
+            params.put("nationality", nationality);
 
-		commonService.save(student);
+        if (ScUtil.isAllPresent(physicallyChallenged))
+            params.put("physicallyChallenged", physicallyChallenged);
 
-		String message = "";
-		if (ScUtil.isAllPresent(id)) {
-			message = "Successfully updated.";
-			res.setApiMessage(ApiUtilDTO.okMessage(message));
-		} else {
-			message = "Successfully registered.";
-			res.setApiMessage(ApiUtilDTO.createdMessage(message));
-			res.setActionMessage(message);
-		}
+        if (ScUtil.isAllPresent(registrationDate))
+            params.put("registrationDate", registrationDate);
 
-		return res;
-	}
+        if (ScUtil.isAllPresent(registrationNo))
+            params.put("registrationNo", registrationNo);
+        return params;
+    }
 
-	public ActionResponseDTO deleteStudent(Long id) {
+    public StudentsResponseDTO findStudentsByStandard(String standard) {
 
-		ActionResponseDTO res = new ActionResponseDTO();
+        StudentsResponseDTO res = new StudentsResponseDTO();
 
-		Student student = commonService.findById(id, Student.class);
+        List<Filter> filters = Arrays.asList(new Filter("standard", Operator.EQUAL, FieldType.STRING, standard));
+        List<Student> students = commonService.find(filters, Student.class);
 
-		if (!ScUtil.isAllPresent(student))
-			throw new NotFoundException("No student can be found !");
+        List<StudentDTO> dtoStudents = new ArrayList<>();
+        students.forEach(student -> {
+            dtoStudents.add(setStudentToDto(student));
+        });
 
-		commonService.delete(student);
+        res.setApiMessage(ApiUtilDTO.okMessage("Success"));
+        res.setData(dtoStudents);
+        return res;
+    }
 
-		res.setActionMessage("Student has been deleted successfully");
-		res.setApiMessage(ApiUtilDTO.okMessage("Student has been deleted successfully"));
-		return res;
-	}
+    public StudentResponseDTO findStudent(Long id) {
 
-	public StudentDTO setStudentToDto(Student student) {
+        StudentResponseDTO res = new StudentResponseDTO();
+        Student student = commonService.findById(id, Student.class);
 
-		StudentDTO studentDto = new StudentDTO();
+        if (!ScUtil.isAllPresent(student))
+            throw new NotFoundException("No Student can be found !");
 
-		studentDto.setRegistrationDate(ScDateUtil.dateToString(student.getRegistrationDate()));
-		studentDto.setRegistrationNo(student.getRegistrationNo());
-		studentDto.setStatus(student.getStatus());
-		studentDto.setAge(student.getAge());
-		studentDto.setDob(ScDateUtil.dateToString(student.getDob()));
-		studentDto.setFirstName(student.getFirstName());
-		studentDto.setId(student.getId());
-		studentDto.setJoiningDate(ScDateUtil.dateToString(student.getJoiningDate()));
-		studentDto.setLastName(student.getLastName());
-		studentDto.setMiddleName(student.getMiddleName());
-		studentDto.setRollNo(student.getRollNo());
-		studentDto.setStandard(student.getStandard());
-		studentDto.setBloodGroup(student.getBloodGroup());
-		studentDto.setCommunity(student.getCommunity());
-		studentDto.setGender(student.getGender());
-		studentDto.setNationality(student.getNationality());
-		studentDto.setPhysicallyChallenged(student.getPhysicallyChallenged());
-		studentDto.setReligion(student.getReligion());
-		studentDto.setSameAsPermAddr(student.getSameAsPermAddr());
-		studentDto.setProfilePic(setDocDtoDoc(student.getProfilePic()));
+        StudentDTO studentDto = setStudentToDto(student);
 
-		Address permanentAddress = student.getPermanentAddress();
-		if (ScUtil.isAllPresent(permanentAddress)) {
-			AddressDTO permAddDto = new AddressDTO();
-			permAddDto.setCountry(permanentAddress.getCountry());
-			permAddDto.setDistrict(permanentAddress.getDistrict());
-			permAddDto.setFirstLine(permanentAddress.getFirstLine());
-			permAddDto.setId(permanentAddress.getId());
-			permAddDto.setSecondLine(permanentAddress.getSecondLine());
-			permAddDto.setState(permanentAddress.getState());
-			studentDto.setPermanentAddress(permAddDto);
-		}
+        res.setApiMessage(ApiUtilDTO.okMessage("Success"));
+        res.setData(studentDto);
 
-		Address correspondentAddress = student.getCorrespondentAddress();
-		if (ScUtil.isAllPresent(correspondentAddress)) {
-			AddressDTO corrAddrDto = new AddressDTO();
-			corrAddrDto.setCountry(correspondentAddress.getCountry());
-			corrAddrDto.setDistrict(correspondentAddress.getDistrict());
-			corrAddrDto.setFirstLine(correspondentAddress.getFirstLine());
-			corrAddrDto.setId(correspondentAddress.getId());
-			corrAddrDto.setSecondLine(correspondentAddress.getSecondLine());
-			corrAddrDto.setState(correspondentAddress.getState());
-			studentDto.setCorrespondentAddress(corrAddrDto);
-		}
+        return res;
+    }
 
-		StudentGuardian fatherInfo = student.getFatherInfo();
-		if (ScUtil.isAllPresent(fatherInfo)) {
-			StudentGuardianDTO fatherDto = new StudentGuardianDTO();
-			fatherDto.setContactNo(fatherInfo.getContactNo());
-			fatherDto.setDob(ScDateUtil.dateToString(fatherInfo.getDob()));
-			fatherDto.setId(fatherInfo.getId());
-			fatherDto.setName(fatherInfo.getName());
-			fatherDto.setEduQualification(fatherInfo.getEduQualification());
-			fatherDto.setOccupation(fatherInfo.getOccupation());
-			fatherDto.setIncome(fatherInfo.getIncome());
-			studentDto.setFatherInfo(fatherDto);
+    public ActionResponseDTO createOrUpdateStudent(StudentDTO dtoStudent, String id) {
 
-		}
+        ActionResponseDTO res = new ActionResponseDTO();
 
-		StudentGuardian motherInfo = student.getMotherInfo();
-		if (ScUtil.isAllPresent(motherInfo)) {
-			StudentGuardianDTO motherInfoDto = new StudentGuardianDTO();
-			motherInfoDto.setContactNo(motherInfo.getContactNo());
-			motherInfoDto.setDob(ScDateUtil.dateToString(motherInfo.getDob()));
-			motherInfoDto.setId(motherInfo.getId());
-			motherInfoDto.setName(fatherInfo.getName());
-			motherInfoDto.setEduQualification(motherInfo.getEduQualification());
-			motherInfoDto.setOccupation(motherInfo.getOccupation());
-			motherInfoDto.setIncome(motherInfo.getIncome());
-			studentDto.setMotherInfo(motherInfoDto);
-		}
+        Student student = setDtoToStudent(dtoStudent, id);
 
-		StudentGuardian guardianInfo = student.getGuardianInfo();
-		if (ScUtil.isAllPresent(guardianInfo)) {
-			StudentGuardianDTO guardianInfoDto = new StudentGuardianDTO();
-			guardianInfoDto.setContactNo(guardianInfo.getContactNo());
-			guardianInfoDto.setDob(ScDateUtil.dateToString(guardianInfo.getDob()));
-			guardianInfoDto.setId(guardianInfo.getId());
-			guardianInfoDto.setName(guardianInfo.getName());
-			guardianInfoDto.setEduQualification(guardianInfo.getEduQualification());
-			guardianInfoDto.setOccupation(guardianInfo.getOccupation());
-			guardianInfoDto.setIncome(guardianInfo.getIncome());
-			studentDto.setGuardianInfo(guardianInfoDto);
-		}
+        commonService.save(student);
 
-		return studentDto;
-	}
+        String message = "";
+        if (ScUtil.isAllPresent(id)) {
+            message = "Successfully updated.";
+            res.setApiMessage(ApiUtilDTO.okMessage(message));
+        } else {
+            message = "Successfully registered.";
+            res.setApiMessage(ApiUtilDTO.createdMessage(message));
+            res.setActionMessage(message);
+        }
 
-	public Student setDtoToStudent(StudentDTO studentDto, String id) {
+        return res;
+    }
 
-		Student student = new Student();
+    public ActionResponseDTO deleteStudent(Long id) {
 
-		if (ScUtil.isAllPresent(id))
-			student = commonService.findById(id, Student.class);
+        ActionResponseDTO res = new ActionResponseDTO();
 
-		if (!ScUtil.isAllPresent(student))
-			throw new NotFoundException("No student can be found !");
+        Student student = commonService.findById(id, Student.class);
 
-		if (!ScUtil.isAllPresent(student.getId())) {
-			student.setRegistrationNo(ScUtil.getGeneratedNumber("REG"));
-			student.setRegistrationDate(new Date());
-			student.setStatus(StudentStatus.ACTIVE);
-		} else {
-			student.setStatus(studentDto.getStatus());
-		}
+        if (!ScUtil.isAllPresent(student))
+            throw new NotFoundException("No student can be found !");
 
-		student.setDob(ScDateUtil.stringToDate(studentDto.getDob()));
-		student.setFirstName(studentDto.getFirstName());
-		student.setId(studentDto.getId());
-		student.setJoiningDate(ScDateUtil.stringToDate(studentDto.getJoiningDate()));
-		student.setLastName(studentDto.getLastName());
-		student.setMiddleName(studentDto.getMiddleName());
-		student.setRollNo(studentDto.getRollNo());
-		student.setStandard(studentDto.getStandard());
-		student.setReligion(studentDto.getReligion());
+        commonService.delete(student);
 
-		student.setBloodGroup(studentDto.getBloodGroup());
-		student.setCommunity(studentDto.getCommunity());
-		student.setGender(studentDto.getGender());
-		student.setNationality(studentDto.getNationality());
-		student.setPhysicallyChallenged(studentDto.getPhysicallyChallenged());
+        res.setActionMessage("Student has been deleted successfully");
+        res.setApiMessage(ApiUtilDTO.okMessage("Student has been deleted successfully"));
+        return res;
+    }
 
-		student.setSameAsPermAddr(studentDto.getSameAsPermAddr());
+    public StudentDTO setStudentToDto(Student student) {
 
-		if (student.getSameAsPermAddr() == true) {
-			if (ScUtil.isAllPresent(student.getPermanentAddress())) {
-				student.setPermanentAddress(null);
-			}
-		}
+        StudentDTO studentDto = new StudentDTO();
 
-		AddressDTO permAddDto = studentDto.getPermanentAddress();
-		if (ScUtil.isAllPresent(permAddDto) && studentDto.getSameAsPermAddr() == false) {
-			if (ScUtil.isAllPresent(permAddDto)) {
+        studentDto.setRegistrationDate(ScDateUtil.dateToString(student.getRegistrationDate()));
+        studentDto.setRegistrationNo(student.getRegistrationNo());
+        studentDto.setStatus(student.getStatus());
+        studentDto.setAge(student.getAge());
+        studentDto.setDob(ScDateUtil.dateToString(student.getDob()));
+        studentDto.setFirstName(student.getFirstName());
+        studentDto.setId(student.getId());
+        studentDto.setJoiningDate(ScDateUtil.dateToString(student.getJoiningDate()));
+        studentDto.setLastName(student.getLastName());
+        studentDto.setMiddleName(student.getMiddleName());
+        studentDto.setRollNo(student.getRollNo());
+        studentDto.setStandard(student.getStandard());
+        studentDto.setBloodGroup(student.getBloodGroup());
+        studentDto.setCommunity(student.getCommunity());
+        studentDto.setGender(student.getGender());
+        studentDto.setNationality(student.getNationality());
+        studentDto.setPhysicallyChallenged(student.getPhysicallyChallenged());
+        studentDto.setReligion(student.getReligion());
+        studentDto.setSameAsPermAddr(student.getSameAsPermAddr());
+        studentDto.setProfilePic(setDocDtoDoc(student.getProfilePic()));
 
-				Address permanentAddress = new Address();
-				if (ScUtil.isAllPresent(student.getPermanentAddress()))
-					permanentAddress = student.getPermanentAddress();
-				permanentAddress.setCountry(permAddDto.getCountry());
-				permanentAddress.setDistrict(permAddDto.getDistrict());
-				permanentAddress.setFirstLine(permAddDto.getFirstLine());
-				// permanentAddress.setId(permAddDto.getId());
-				permanentAddress.setSecondLine(permAddDto.getSecondLine());
-				permanentAddress.setState(permAddDto.getState());
+        Address permanentAddress = student.getPermanentAddress();
+        if (ScUtil.isAllPresent(permanentAddress)) {
+            AddressDTO permAddDto = new AddressDTO();
+            permAddDto.setCountry(permanentAddress.getCountry());
+            permAddDto.setDistrict(permanentAddress.getDistrict());
+            permAddDto.setFirstLine(permanentAddress.getFirstLine());
+            permAddDto.setId(permanentAddress.getId());
+            permAddDto.setSecondLine(permanentAddress.getSecondLine());
+            permAddDto.setState(permanentAddress.getState());
+            studentDto.setPermanentAddress(permAddDto);
+        }
 
-				if (!ScUtil.isAllPresent(student.getPermanentAddress()))
-					student.setPermanentAddress(permanentAddress);
-			}
-		}
+        Address correspondentAddress = student.getCorrespondentAddress();
+        if (ScUtil.isAllPresent(correspondentAddress)) {
+            AddressDTO corrAddrDto = new AddressDTO();
+            corrAddrDto.setCountry(correspondentAddress.getCountry());
+            corrAddrDto.setDistrict(correspondentAddress.getDistrict());
+            corrAddrDto.setFirstLine(correspondentAddress.getFirstLine());
+            corrAddrDto.setId(correspondentAddress.getId());
+            corrAddrDto.setSecondLine(correspondentAddress.getSecondLine());
+            corrAddrDto.setState(correspondentAddress.getState());
+            studentDto.setCorrespondentAddress(corrAddrDto);
+        }
 
-		AddressDTO corrAddrDto = studentDto.getCorrespondentAddress();
-		if (ScUtil.isAllPresent(corrAddrDto)) {
+        StudentGuardian fatherInfo = student.getFatherInfo();
+        if (ScUtil.isAllPresent(fatherInfo)) {
+            StudentGuardianDTO fatherDto = new StudentGuardianDTO();
+            fatherDto.setContactNo(fatherInfo.getContactNo());
+            fatherDto.setDob(ScDateUtil.dateToString(fatherInfo.getDob()));
+            fatherDto.setId(fatherInfo.getId());
+            fatherDto.setName(fatherInfo.getName());
+            fatherDto.setEduQualification(fatherInfo.getEduQualification());
+            fatherDto.setOccupation(fatherInfo.getOccupation());
+            fatherDto.setIncome(fatherInfo.getIncome());
+            studentDto.setFatherInfo(fatherDto);
 
-			Address correspondentAddress = new Address();
-			if (ScUtil.isAllPresent(student.getCorrespondentAddress()))
-				correspondentAddress = student.getCorrespondentAddress();
-			correspondentAddress.setCountry(corrAddrDto.getCountry());
-			correspondentAddress.setDistrict(corrAddrDto.getDistrict());
-			correspondentAddress.setFirstLine(corrAddrDto.getFirstLine());
-			correspondentAddress.setSecondLine(corrAddrDto.getSecondLine());
-			correspondentAddress.setState(corrAddrDto.getState());
+        }
 
-			if (!ScUtil.isAllPresent(student.getCorrespondentAddress()))
-				student.setCorrespondentAddress(correspondentAddress);
-		}
+        StudentGuardian motherInfo = student.getMotherInfo();
+        if (ScUtil.isAllPresent(motherInfo)) {
+            StudentGuardianDTO motherInfoDto = new StudentGuardianDTO();
+            motherInfoDto.setContactNo(motherInfo.getContactNo());
+            motherInfoDto.setDob(ScDateUtil.dateToString(motherInfo.getDob()));
+            motherInfoDto.setId(motherInfo.getId());
+            motherInfoDto.setName(fatherInfo.getName());
+            motherInfoDto.setEduQualification(motherInfo.getEduQualification());
+            motherInfoDto.setOccupation(motherInfo.getOccupation());
+            motherInfoDto.setIncome(motherInfo.getIncome());
+            studentDto.setMotherInfo(motherInfoDto);
+        }
 
-		StudentGuardianDTO fatherInfoDto = studentDto.getFatherInfo();
-		if (ScUtil.isAllPresent(fatherInfoDto)) {
+        StudentGuardian guardianInfo = student.getGuardianInfo();
+        if (ScUtil.isAllPresent(guardianInfo)) {
+            StudentGuardianDTO guardianInfoDto = new StudentGuardianDTO();
+            guardianInfoDto.setContactNo(guardianInfo.getContactNo());
+            guardianInfoDto.setDob(ScDateUtil.dateToString(guardianInfo.getDob()));
+            guardianInfoDto.setId(guardianInfo.getId());
+            guardianInfoDto.setName(guardianInfo.getName());
+            guardianInfoDto.setEduQualification(guardianInfo.getEduQualification());
+            guardianInfoDto.setOccupation(guardianInfo.getOccupation());
+            guardianInfoDto.setIncome(guardianInfo.getIncome());
+            studentDto.setGuardianInfo(guardianInfoDto);
+        }
 
-			StudentGuardian guardian = new StudentGuardian();
-			if (ScUtil.isAllPresent(student.getFatherInfo()))
-				guardian = student.getFatherInfo();
-			guardian.setContactNo(fatherInfoDto.getContactNo());
-			guardian.setDob(ScDateUtil.stringToDate(fatherInfoDto.getDob()));
-			// guardian.setId(fatherInfoDto.getId());
-			guardian.setName(fatherInfoDto.getName());
-			guardian.setEduQualification(fatherInfoDto.getEduQualification());
-			guardian.setOccupation(fatherInfoDto.getOccupation());
-			guardian.setIncome(fatherInfoDto.getIncome());
+        return studentDto;
+    }
 
-			if (!ScUtil.isAllPresent(student.getFatherInfo()))
-				student.setFatherInfo(guardian);
-		}
+    public Student setDtoToStudent(StudentDTO studentDto, String id) {
 
-		StudentGuardianDTO motherInfoDto = studentDto.getMotherInfo();
-		if (ScUtil.isAllPresent(motherInfoDto)) {
+        Student student = new Student();
 
-			StudentGuardian guardian = new StudentGuardian();
-			if (ScUtil.isAllPresent(student.getMotherInfo()))
-				guardian = student.getMotherInfo();
-			guardian.setContactNo(motherInfoDto.getContactNo());
-			guardian.setDob(ScDateUtil.stringToDate(motherInfoDto.getDob()));
-			// guardian.setId(motherInfoDto.getId());
-			guardian.setName(motherInfoDto.getName());
-			guardian.setEduQualification(motherInfoDto.getEduQualification());
-			guardian.setOccupation(motherInfoDto.getOccupation());
-			guardian.setIncome(motherInfoDto.getIncome());
+        if (ScUtil.isAllPresent(id))
+            student = commonService.findById(id, Student.class);
 
-			if (!ScUtil.isAllPresent(student.getMotherInfo()))
-				student.setMotherInfo(guardian);
-		}
+        if (!ScUtil.isAllPresent(student))
+            throw new NotFoundException("No student can be found !");
 
-		StudentGuardianDTO guardianInfoDto = studentDto.getGuardianInfo();
-		if (ScUtil.isAllPresent(guardianInfoDto)) {
+        if (!ScUtil.isAllPresent(student.getId())) {
+            student.setRegistrationNo(ScUtil.getGeneratedNumber("REG"));
+            student.setRegistrationDate(new Date());
+            student.setStatus(StudentStatus.ACTIVE);
+        } else {
+            student.setStatus(studentDto.getStatus());
+        }
 
-			StudentGuardian guardian = new StudentGuardian();
-			if (ScUtil.isAllPresent(student.getGuardianInfo()))
-				guardian = student.getGuardianInfo();
-			guardian.setContactNo(guardianInfoDto.getContactNo());
-			guardian.setDob(ScDateUtil.stringToDate(guardianInfoDto.getDob()));
-			// guardian.setId(guardianInfoDto.getId());
-			guardian.setName(guardianInfoDto.getName());
-			guardian.setEduQualification(guardianInfoDto.getEduQualification());
-			guardian.setOccupation(guardianInfoDto.getOccupation());
-			guardian.setIncome(guardianInfoDto.getIncome());
+        student.setDob(ScDateUtil.stringToDate(studentDto.getDob()));
+        student.setFirstName(studentDto.getFirstName());
+        student.setId(studentDto.getId());
+        student.setJoiningDate(ScDateUtil.stringToDate(studentDto.getJoiningDate()));
+        student.setLastName(studentDto.getLastName());
+        student.setMiddleName(studentDto.getMiddleName());
+        student.setRollNo(studentDto.getRollNo());
+        student.setStandard(studentDto.getStandard());
+        student.setReligion(studentDto.getReligion());
 
-			if (!ScUtil.isAllPresent(student.getGuardianInfo()))
-				student.setGuardianInfo(guardian);
-		}
+        student.setBloodGroup(studentDto.getBloodGroup());
+        student.setCommunity(studentDto.getCommunity());
+        student.setGender(studentDto.getGender());
+        student.setNationality(studentDto.getNationality());
+        student.setPhysicallyChallenged(studentDto.getPhysicallyChallenged());
 
-		return student;
-	}
+        student.setSameAsPermAddr(studentDto.getSameAsPermAddr());
 
-	private DocumentDTO setDocDtoDoc(Document scDoc) {
-		if (ScUtil.isAllPresent(scDoc)) {
-			DocumentDTO doc = new DocumentDTO();
-			doc.setId(scDoc.getId());
-			String docUrl = "/document/" + doc.getId() + "/view";
-			doc.setDocUrl(docUrl);
-			return doc;
-		}
-		return null;
-	}
+        if (student.getSameAsPermAddr() == true) {
+            if (ScUtil.isAllPresent(student.getPermanentAddress())) {
+                student.setPermanentAddress(null);
+            }
+        }
+
+        AddressDTO permAddDto = studentDto.getPermanentAddress();
+        if (ScUtil.isAllPresent(permAddDto) && studentDto.getSameAsPermAddr() == false) {
+            if (ScUtil.isAllPresent(permAddDto)) {
+
+                Address permanentAddress = new Address();
+                if (ScUtil.isAllPresent(student.getPermanentAddress()))
+                    permanentAddress = student.getPermanentAddress();
+                permanentAddress.setCountry(permAddDto.getCountry());
+                permanentAddress.setDistrict(permAddDto.getDistrict());
+                permanentAddress.setFirstLine(permAddDto.getFirstLine());
+                // permanentAddress.setId(permAddDto.getId());
+                permanentAddress.setSecondLine(permAddDto.getSecondLine());
+                permanentAddress.setState(permAddDto.getState());
+
+                if (!ScUtil.isAllPresent(student.getPermanentAddress()))
+                    student.setPermanentAddress(permanentAddress);
+            }
+        }
+
+        AddressDTO corrAddrDto = studentDto.getCorrespondentAddress();
+        if (ScUtil.isAllPresent(corrAddrDto)) {
+
+            Address correspondentAddress = new Address();
+            if (ScUtil.isAllPresent(student.getCorrespondentAddress()))
+                correspondentAddress = student.getCorrespondentAddress();
+            correspondentAddress.setCountry(corrAddrDto.getCountry());
+            correspondentAddress.setDistrict(corrAddrDto.getDistrict());
+            correspondentAddress.setFirstLine(corrAddrDto.getFirstLine());
+            correspondentAddress.setSecondLine(corrAddrDto.getSecondLine());
+            correspondentAddress.setState(corrAddrDto.getState());
+
+            if (!ScUtil.isAllPresent(student.getCorrespondentAddress()))
+                student.setCorrespondentAddress(correspondentAddress);
+        }
+
+        StudentGuardianDTO fatherInfoDto = studentDto.getFatherInfo();
+        if (ScUtil.isAllPresent(fatherInfoDto)) {
+
+            StudentGuardian guardian = new StudentGuardian();
+            if (ScUtil.isAllPresent(student.getFatherInfo()))
+                guardian = student.getFatherInfo();
+            guardian.setContactNo(fatherInfoDto.getContactNo());
+            guardian.setDob(ScDateUtil.stringToDate(fatherInfoDto.getDob()));
+            // guardian.setId(fatherInfoDto.getId());
+            guardian.setName(fatherInfoDto.getName());
+            guardian.setEduQualification(fatherInfoDto.getEduQualification());
+            guardian.setOccupation(fatherInfoDto.getOccupation());
+            guardian.setIncome(fatherInfoDto.getIncome());
+
+            if (!ScUtil.isAllPresent(student.getFatherInfo()))
+                student.setFatherInfo(guardian);
+        }
+
+        StudentGuardianDTO motherInfoDto = studentDto.getMotherInfo();
+        if (ScUtil.isAllPresent(motherInfoDto)) {
+
+            StudentGuardian guardian = new StudentGuardian();
+            if (ScUtil.isAllPresent(student.getMotherInfo()))
+                guardian = student.getMotherInfo();
+            guardian.setContactNo(motherInfoDto.getContactNo());
+            guardian.setDob(ScDateUtil.stringToDate(motherInfoDto.getDob()));
+            // guardian.setId(motherInfoDto.getId());
+            guardian.setName(motherInfoDto.getName());
+            guardian.setEduQualification(motherInfoDto.getEduQualification());
+            guardian.setOccupation(motherInfoDto.getOccupation());
+            guardian.setIncome(motherInfoDto.getIncome());
+
+            if (!ScUtil.isAllPresent(student.getMotherInfo()))
+                student.setMotherInfo(guardian);
+        }
+
+        StudentGuardianDTO guardianInfoDto = studentDto.getGuardianInfo();
+        if (ScUtil.isAllPresent(guardianInfoDto)) {
+
+            StudentGuardian guardian = new StudentGuardian();
+            if (ScUtil.isAllPresent(student.getGuardianInfo()))
+                guardian = student.getGuardianInfo();
+            guardian.setContactNo(guardianInfoDto.getContactNo());
+            guardian.setDob(ScDateUtil.stringToDate(guardianInfoDto.getDob()));
+            // guardian.setId(guardianInfoDto.getId());
+            guardian.setName(guardianInfoDto.getName());
+            guardian.setEduQualification(guardianInfoDto.getEduQualification());
+            guardian.setOccupation(guardianInfoDto.getOccupation());
+            guardian.setIncome(guardianInfoDto.getIncome());
+
+            if (!ScUtil.isAllPresent(student.getGuardianInfo()))
+                student.setGuardianInfo(guardian);
+        }
+
+        return student;
+    }
+
+    private DocumentDTO setDocDtoDoc(Document scDoc) {
+        if (ScUtil.isAllPresent(scDoc)) {
+            DocumentDTO doc = new DocumentDTO();
+            doc.setId(scDoc.getId());
+            String docUrl = "/document/" + doc.getId() + "/view";
+            doc.setDocUrl(docUrl);
+            return doc;
+        }
+        return null;
+    }
 
 }

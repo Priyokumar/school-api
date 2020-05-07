@@ -16,14 +16,14 @@ import com.school.api.common.dto.ActionResponseDTO;
 import com.school.api.hr.dto.EmployeeAttendanceReportResponseDTO;
 import com.school.api.hr.dto.EmployeeAttendanceResponseDTO;
 import com.school.api.hr.dto.EmployeeAttendancesRequestDTO;
-import com.school.api.hr.service.AttendanceService;
+import com.school.api.hr.service.EmployeeAttendanceService;
 
 @RestController
-@RequestMapping("/v1/api/attendances")
+@RequestMapping("/v1/api/employeeAttendances")
 public class EmployeeAttendanceController {
 
 	@Autowired
-	private AttendanceService attendanceService;
+	private EmployeeAttendanceService attendanceService;
 
 	@GetMapping
 	public EmployeeAttendanceResponseDTO findAttendance(@RequestParam(name = "empId", required = true) String empId,

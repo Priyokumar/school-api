@@ -14,14 +14,14 @@ import com.school.api.common.dto.ActionResponseDTO;
 import com.school.api.hr.dto.EmployeeSalariesResponseDTO;
 import com.school.api.hr.dto.EmployeeSalaryRequestDTO;
 import com.school.api.hr.dto.EmployeeSalaryResponseDTO;
-import com.school.api.hr.service.SalaryService;
+import com.school.api.hr.service.EmployeeSalaryService;
 
 @RestController
 @RequestMapping("/v1/api/salaries")
 public class EmployeePayrollSalaryController {
 
 	@Autowired
-	private SalaryService salaryService;
+	private EmployeeSalaryService salaryService;
 
 	@GetMapping
 	public EmployeeSalariesResponseDTO findAllSalaries() {

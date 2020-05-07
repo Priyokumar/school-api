@@ -18,14 +18,14 @@ import com.school.api.common.dto.ActionResponseDTO;
 import com.school.api.hr.dto.EmployeeDesignationDTO;
 import com.school.api.hr.dto.EmployeeDesignationResponseDTO;
 import com.school.api.hr.dto.EmployeeDesignationsResponseDTO;
-import com.school.api.hr.service.DesignationService;
+import com.school.api.hr.service.EmployeeDesignationService;
 
 @RestController
 @RequestMapping("/v1/api/designations")
 public class EmployeeDesignationController {
 
 	@Autowired
-	private DesignationService designationService;
+	private EmployeeDesignationService designationService;
 
 	@GetMapping
 	public EmployeeDesignationsResponseDTO findAllDesignations() {

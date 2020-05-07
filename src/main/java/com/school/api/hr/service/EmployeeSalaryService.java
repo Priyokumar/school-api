@@ -19,7 +19,7 @@ import com.school.api.hr.entity.EmployeePayrollSalary;
 import com.school.api.hr.repository.IEmployeeSalaryRepository;
 
 @Service
-public class SalaryService {
+public class EmployeeSalaryService {
 
 	@Autowired
 	private IEmployeeSalaryRepository salaryRepository;

@@ -1,6 +1,8 @@
 package com.school.api.student.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,8 +38,10 @@ public class StudentController {
 	}
 
 	@PostMapping
-	public ActionResponseDTO createStudent(@RequestBody StudentDTO studentDTO) {
-		return studentService.createOrUpdateStudent(studentDTO, null);
+	public ResponseEntity<ActionResponseDTO> createStudent(@RequestBody StudentDTO studentDTO) {
+		final ActionResponseDTO response = studentService.createOrUpdateStudent(studentDTO, null);
+		ResponseEntity<ActionResponseDTO> responseEntity = new ResponseEntity<ActionResponseDTO>(response, HttpStatus.CREATED);
+		return responseEntity;
 	}
 
 	@PutMapping(value = "/{id}")

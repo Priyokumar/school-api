@@ -1,20 +1,18 @@
-package com.school.api.hr.dto;
-
-import java.util.List;
+package com.school.api.student.dto;
 
 import com.school.api.common.dto.ApiMessageDTO;
 
-public class EmployeeAttendencesResponseDTO {
+public class StudentAttendanceResponseDTO {
 
-	private List<EmployeeAttendenceDTO> data;
+	private StudentAttendanceDTO data;
 
 	private ApiMessageDTO apiMessage;
 
-	public List<EmployeeAttendenceDTO> getData() {
+	public StudentAttendanceDTO getData() {
 		return data;
 	}
 
-	public void setData(List<EmployeeAttendenceDTO> data) {
+	public void setData(StudentAttendanceDTO data) {
 		this.data = data;
 	}
 
@@ -25,5 +23,6 @@ public class EmployeeAttendencesResponseDTO {
 	public void setApiMessage(ApiMessageDTO apiMessage) {
 		this.apiMessage = apiMessage;
 	}
-
+	
+	
 }

@@ -18,7 +18,7 @@ import com.school.api.hr.entity.EmployeeDesignation;
 import com.school.api.hr.repository.IEmployeeDesignationRepository;
 
 @Service
-public class DesignationService {
+public class EmployeeDesignationService {
 
 	@Autowired
 	private IEmployeeDesignationRepository designationRepository;

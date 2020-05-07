@@ -19,14 +19,14 @@ import com.school.api.common.dto.ActionResponseDTO;
 import com.school.api.hr.dto.EmployeePayrollRequestDTO;
 import com.school.api.hr.dto.EmployeePayrollResponseDTO;
 import com.school.api.hr.dto.EmployeePayrollsResponseDTO;
-import com.school.api.hr.service.PayrollService;
+import com.school.api.hr.service.EmployeePayrollService;
 
 @RestController
 @RequestMapping("/v1/api/payrolls")
 public class EmployeePayrollController {
 
 	@Autowired
-	private PayrollService payrollService;
+	private EmployeePayrollService payrollService;
 
 	@GetMapping
 	public EmployeePayrollsResponseDTO findPayrolls(@RequestParam(name = "empId", required = false) String empId,

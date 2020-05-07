@@ -26,7 +26,7 @@ import com.school.api.hr.repository.IEmployeeRepository;
 import com.school.api.hr.repository.IEmployeePayrollRepository;
 
 @Service
-public class PayrollService {
+public class EmployeePayrollService {
 
 	@Autowired
 	private IEmployeePayrollRepository payrollRepository;

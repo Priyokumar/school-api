@@ -25,7 +25,7 @@ import com.school.api.hr.repository.IEmployeeAttendanceRepository;
 import com.school.api.hr.repository.IEmployeeRepository;
 
 @Service
-public class AttendanceService {
+public class EmployeeAttendanceService {
 
 	@Autowired
 	private IEmployeeAttendanceRepository attendanceRepository;
