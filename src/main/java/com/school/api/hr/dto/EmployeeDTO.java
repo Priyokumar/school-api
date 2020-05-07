@@ -29,7 +29,7 @@ public class EmployeeDTO {
 
 	private String employeeType;
 
-	private DesignationDTO designation;
+	private EmployeeDesignationDTO designation;
 
 	private Boolean sameAsPermanentAddress = false;
 
@@ -39,9 +39,9 @@ public class EmployeeDTO {
 
 	private AddressDTO permanentAddress;
 
-	private PersonalInfoDTO personalInfo;
+	private EmployeePersonalInfoDTO personalInfo;
 
-	private AcademicBackgroundDTO highestQualification;
+	private EmployeeAcademicBackgroundDTO highestQualification;
 
 	public String getId() {
 		return id;
@@ -131,11 +131,11 @@ public class EmployeeDTO {
 		this.employeeType = employeeType;
 	}
 
-	public DesignationDTO getDesignation() {
+	public EmployeeDesignationDTO getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(DesignationDTO designation) {
+	public void setDesignation(EmployeeDesignationDTO designation) {
 		this.designation = designation;
 	}
 
@@ -155,19 +155,19 @@ public class EmployeeDTO {
 		this.permanentAddress = permanentAddress;
 	}
 
-	public PersonalInfoDTO getPersonalInfo() {
+	public EmployeePersonalInfoDTO getPersonalInfo() {
 		return personalInfo;
 	}
 
-	public void setPersonalInfo(PersonalInfoDTO personalInfo) {
+	public void setPersonalInfo(EmployeePersonalInfoDTO personalInfo) {
 		this.personalInfo = personalInfo;
 	}
 
-	public AcademicBackgroundDTO getHighestQualification() {
+	public EmployeeAcademicBackgroundDTO getHighestQualification() {
 		return highestQualification;
 	}
 
-	public void setHighestQualification(AcademicBackgroundDTO highestQualification) {
+	public void setHighestQualification(EmployeeAcademicBackgroundDTO highestQualification) {
 		this.highestQualification = highestQualification;
 	}
 

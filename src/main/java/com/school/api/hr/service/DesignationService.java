@@ -11,28 +11,28 @@ import com.school.api.common.dto.ActionResponseDTO;
 import com.school.api.common.dto.ApiUtilDTO;
 import com.school.api.common.utils.ScUtil;
 import com.school.api.error.exception.NotFoundException;
-import com.school.api.hr.dto.DesignationDTO;
-import com.school.api.hr.dto.DesignationResponseDTO;
-import com.school.api.hr.dto.DesignationsResponseDTO;
-import com.school.api.hr.entity.Designation;
-import com.school.api.hr.repository.IDesignationRepository;
+import com.school.api.hr.dto.EmployeeDesignationDTO;
+import com.school.api.hr.dto.EmployeeDesignationResponseDTO;
+import com.school.api.hr.dto.EmployeeDesignationsResponseDTO;
+import com.school.api.hr.entity.EmployeeDesignation;
+import com.school.api.hr.repository.IEmployeeDesignationRepository;
 
 @Service
 public class DesignationService {
 
 	@Autowired
-	IDesignationRepository designationRepository;
+	private IEmployeeDesignationRepository designationRepository;
 
-	public DesignationsResponseDTO findAllDesignations() {
+	public EmployeeDesignationsResponseDTO findAllDesignations() {
 
-		DesignationsResponseDTO res = new DesignationsResponseDTO();
+		EmployeeDesignationsResponseDTO res = new EmployeeDesignationsResponseDTO();
 
-		List<Designation> designations = (List<Designation>) designationRepository.findAll();
+		List<EmployeeDesignation> designations = (List<EmployeeDesignation>) designationRepository.findAll();
 
 		if (!ScUtil.isAllPresent(designations))
 			throw new NotFoundException("No designation can be found !");
 
-		List<DesignationDTO> designationsDTO = new ArrayList<DesignationDTO>();
+		List<EmployeeDesignationDTO> designationsDTO = new ArrayList<EmployeeDesignationDTO>();
 
 		designations.forEach(designation -> {
 			designationsDTO.add(setDesignationToDTO(designation));
@@ -44,23 +44,23 @@ public class DesignationService {
 		return res;
 	}
 
-	private DesignationDTO setDesignationToDTO(Designation designation) {
+	private EmployeeDesignationDTO setDesignationToDTO(EmployeeDesignation designation) {
 
-		DesignationDTO designationDTO = new DesignationDTO();
+		EmployeeDesignationDTO designationDTO = new EmployeeDesignationDTO();
 		designationDTO.setId(designation.getId());
 		designationDTO.setTitle(designation.getTitle());
 
 		return designationDTO;
 	}
 
-	public ActionResponseDTO createOrUpdateDesignation(DesignationDTO designationDTO, String id) {
+	public ActionResponseDTO createOrUpdateDesignation(EmployeeDesignationDTO designationDTO, String id) {
 
 		ActionResponseDTO res = new ActionResponseDTO();
 
-		Designation designation = new Designation();
+		EmployeeDesignation designation = new EmployeeDesignation();
 		if (ScUtil.isAllPresent(id)) {
 
-			Optional<Designation> designationOpt = designationRepository.findById(id);
+			Optional<EmployeeDesignation> designationOpt = designationRepository.findById(id);
 			if (!designationOpt.isPresent()) {
 				throw new NotFoundException("Designation not found.");
 			}
@@ -82,16 +82,16 @@ public class DesignationService {
 		return res;
 	}
 
-	public DesignationResponseDTO findDesignation(String id) {
+	public EmployeeDesignationResponseDTO findDesignation(String id) {
 
-		DesignationResponseDTO res = new DesignationResponseDTO();
+		EmployeeDesignationResponseDTO res = new EmployeeDesignationResponseDTO();
 
-		Optional<Designation> designationOpt = designationRepository.findById(id);
+		Optional<EmployeeDesignation> designationOpt = designationRepository.findById(id);
 
 		if (!designationOpt.isPresent())
 			throw new NotFoundException("No designation can be found !");
 
-		DesignationDTO designationDTO = setDesignationToDTO(designationOpt.get());
+		EmployeeDesignationDTO designationDTO = setDesignationToDTO(designationOpt.get());
 
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
 		res.setData(designationDTO);
@@ -103,7 +103,7 @@ public class DesignationService {
 
 		ActionResponseDTO res = new ActionResponseDTO();
 
-		Optional<Designation> designationOpt = designationRepository.findById(id);
+		Optional<EmployeeDesignation> designationOpt = designationRepository.findById(id);
 
 		if (!designationOpt.isPresent())
 			throw new NotFoundException("No designation can be found !");

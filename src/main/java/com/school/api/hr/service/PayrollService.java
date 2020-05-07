@@ -13,38 +13,38 @@ import com.school.api.common.services.CommonService;
 import com.school.api.common.utils.ScUtil;
 import com.school.api.common.vo.PayrollStatus;
 import com.school.api.error.exception.NotFoundException;
-import com.school.api.hr.dto.DeductionDTO;
-import com.school.api.hr.dto.EarningDTO;
-import com.school.api.hr.dto.PayrollDTO;
-import com.school.api.hr.dto.PayrollRequestDTO;
-import com.school.api.hr.dto.PayrollResponseDTO;
-import com.school.api.hr.dto.PayrollsResponseDTO;
-import com.school.api.hr.entity.Deduction;
-import com.school.api.hr.entity.Earning;
-import com.school.api.hr.entity.Payroll;
+import com.school.api.hr.dto.EmployeePayrollDeductionDTO;
+import com.school.api.hr.dto.EmployeePayrollEarningDTO;
+import com.school.api.hr.dto.EmployeePayrollDTO;
+import com.school.api.hr.dto.EmployeePayrollRequestDTO;
+import com.school.api.hr.dto.EmployeePayrollResponseDTO;
+import com.school.api.hr.dto.EmployeePayrollsResponseDTO;
+import com.school.api.hr.entity.EmployeePayrollDeduction;
+import com.school.api.hr.entity.EmployeePayrollEarning;
+import com.school.api.hr.entity.EmployeePayroll;
 import com.school.api.hr.repository.IEmployeeRepository;
-import com.school.api.hr.repository.IPayrollRepository;
+import com.school.api.hr.repository.IEmployeePayrollRepository;
 
 @Service
 public class PayrollService {
 
 	@Autowired
-	IPayrollRepository payrollRepository;
+	private IEmployeePayrollRepository payrollRepository;
 
 	@Autowired
-	IEmployeeRepository employeeRepository;
+	private IEmployeeRepository employeeRepository;
 
 	@Autowired
-	CommonService commonService;
+	private CommonService commonService;
 	
 	@Autowired
-	EmployeeService employeeService;
+	private EmployeeService employeeService;
 
-	public PayrollsResponseDTO findPayrolls(String empId, String status) {
+	public EmployeePayrollsResponseDTO findPayrolls(String empId, String status) {
 
-		PayrollsResponseDTO res = new PayrollsResponseDTO();
+		EmployeePayrollsResponseDTO res = new EmployeePayrollsResponseDTO();
 
-		List<Payroll> payrolls = null;
+		List<EmployeePayroll> payrolls = null;
 
 		if (ScUtil.isAllPresent(empId) && !ScUtil.isAllPresent(status)) {
 
@@ -59,13 +59,13 @@ public class PayrollService {
 			payrolls = payrollRepository.findPayrollByEmployeeAndStatus(status, empId);
 
 		} else {
-			payrolls = (List<Payroll>) payrollRepository.findAll();
+			payrolls = (List<EmployeePayroll>) payrollRepository.findAll();
 		}
 
 		if (!ScUtil.isAllPresent(payrolls))
 			throw new NotFoundException("No payroll can be found !");
 
-		List<PayrollDTO> payrollsDTO = new ArrayList<PayrollDTO>();
+		List<EmployeePayrollDTO> payrollsDTO = new ArrayList<EmployeePayrollDTO>();
 
 		payrolls.forEach(payroll -> {
 			payrollsDTO.add(setPayrollToDTO(payroll));
@@ -77,9 +77,9 @@ public class PayrollService {
 		return res;
 	}
 
-	private PayrollDTO setPayrollToDTO(Payroll payroll) {
+	private EmployeePayrollDTO setPayrollToDTO(EmployeePayroll payroll) {
 
-		PayrollDTO payrollDTO = new PayrollDTO();
+		EmployeePayrollDTO payrollDTO = new EmployeePayrollDTO();
 		payrollDTO.setId(payroll.getId());
 
 		payrollDTO.setGrossSalary(payroll.getGrossSalary());
@@ -90,26 +90,26 @@ public class PayrollService {
 		payrollDTO.setTotalEarning(payroll.getTotalEarning());
 		payrollDTO.setYear(payroll.getYear());
 		payrollDTO.setEmployee(employeeService.setEmployeeToDto(payroll.getEmployee()));
-		payrollDTO.setEarnings(new ArrayList<EarningDTO>());
-		payrollDTO.setDeductions(new ArrayList<DeductionDTO>());
+		payrollDTO.setEarnings(new ArrayList<EmployeePayrollEarningDTO>());
+		payrollDTO.setDeductions(new ArrayList<EmployeePayrollDeductionDTO>());
 		
-		List<Earning> earnings = payroll.getEarnings();
+		List<EmployeePayrollEarning> earnings = payroll.getEarnings();
 		
 		if (ScUtil.isAllPresent(earnings)) {
 
-			for (Earning earning : earnings) {
-				EarningDTO earningDTO = new EarningDTO();
+			for (EmployeePayrollEarning earning : earnings) {
+				EmployeePayrollEarningDTO earningDTO = new EmployeePayrollEarningDTO();
 				earningDTO.setType(earning.getType());
 				earningDTO.setValue(earning.getValue());
 				payrollDTO.getEarnings().add(earningDTO);
 			}
 		}
 
-		List<Deduction> deductions = payroll.getDeductions();
+		List<EmployeePayrollDeduction> deductions = payroll.getDeductions();
 
 		if (ScUtil.isAllPresent(deductions)) {
-			for (Deduction deduction : deductions) {
-				DeductionDTO deductionDTO = new DeductionDTO();
+			for (EmployeePayrollDeduction deduction : deductions) {
+				EmployeePayrollDeductionDTO deductionDTO = new EmployeePayrollDeductionDTO();
 				deductionDTO.setType(deduction.getType());
 				deductionDTO.setValue(deduction.getValue());
 				payrollDTO.getDeductions().add(deductionDTO);
@@ -119,14 +119,14 @@ public class PayrollService {
 		return payrollDTO;
 	}
 
-	public ActionResponseDTO createOrUpdatePayroll(PayrollRequestDTO payrollRequestDTO, String id) {
+	public ActionResponseDTO createOrUpdatePayroll(EmployeePayrollRequestDTO payrollRequestDTO, String id) {
 
 		ActionResponseDTO res = new ActionResponseDTO();
 
-		Payroll payroll = new Payroll();
+		EmployeePayroll payroll = new EmployeePayroll();
 		if (ScUtil.isAllPresent(id)) {
 
-			Optional<Payroll> payrollOpt = payrollRepository.findById(id);
+			Optional<EmployeePayroll> payrollOpt = payrollRepository.findById(id);
 			if (!payrollOpt.isPresent()) {
 				throw new NotFoundException("Payroll not found.");
 			}
@@ -146,14 +146,14 @@ public class PayrollService {
 			payroll.setTotalEarning(payrollRequestDTO.getTotalEarning());
 			payroll.setYear(payrollRequestDTO.getYear());
 			payroll.setEmployee(employeeRepository.findById(payrollRequestDTO.getEmpId()).get());
-			payroll.setEarnings(new ArrayList<Earning>());
-			payroll.setDeductions(new ArrayList<Deduction>());
-			List<EarningDTO> earningsDTO = payrollRequestDTO.getEarnings();
+			payroll.setEarnings(new ArrayList<EmployeePayrollEarning>());
+			payroll.setDeductions(new ArrayList<EmployeePayrollDeduction>());
+			List<EmployeePayrollEarningDTO> earningsDTO = payrollRequestDTO.getEarnings();
 
 			if (ScUtil.isAllPresent(earningsDTO)) {
 
-				for (EarningDTO earningDTO : earningsDTO) {
-					Earning earning = new Earning();
+				for (EmployeePayrollEarningDTO earningDTO : earningsDTO) {
+					EmployeePayrollEarning earning = new EmployeePayrollEarning();
 					earning.setPayroll(payroll);
 					earning.setType(earningDTO.getType());
 					earning.setValue(earningDTO.getValue());
@@ -161,11 +161,11 @@ public class PayrollService {
 				}
 			}
 
-			List<DeductionDTO> deductionsDTO = payrollRequestDTO.getDeductions();
+			List<EmployeePayrollDeductionDTO> deductionsDTO = payrollRequestDTO.getDeductions();
 
 			if (ScUtil.isAllPresent(deductionsDTO)) {
-				for (DeductionDTO deductionDTO : deductionsDTO) {
-					Deduction deduction = new Deduction();
+				for (EmployeePayrollDeductionDTO deductionDTO : deductionsDTO) {
+					EmployeePayrollDeduction deduction = new EmployeePayrollDeduction();
 					deduction.setPayroll(payroll);
 					deduction.setType(deductionDTO.getType());
 					deduction.setValue(deductionDTO.getValue());
@@ -188,16 +188,16 @@ public class PayrollService {
 		return res;
 	}
 
-	public PayrollResponseDTO findPayroll(String id) {
+	public EmployeePayrollResponseDTO findPayroll(String id) {
 
-		PayrollResponseDTO res = new PayrollResponseDTO();
+		EmployeePayrollResponseDTO res = new EmployeePayrollResponseDTO();
 
-		Optional<Payroll> payrollOpt = payrollRepository.findById(id);
+		Optional<EmployeePayroll> payrollOpt = payrollRepository.findById(id);
 
 		if (!payrollOpt.isPresent())
 			throw new NotFoundException("No payroll can be found !");
 
-		PayrollDTO designationDTO = setPayrollToDTO(payrollOpt.get());
+		EmployeePayrollDTO designationDTO = setPayrollToDTO(payrollOpt.get());
 
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
 		res.setData(designationDTO);
@@ -209,7 +209,7 @@ public class PayrollService {
 
 		ActionResponseDTO res = new ActionResponseDTO();
 
-		Optional<Payroll> payrollOpt = payrollRepository.findById(id);
+		Optional<EmployeePayroll> payrollOpt = payrollRepository.findById(id);
 
 		if (!payrollOpt.isPresent())
 			throw new NotFoundException("No payroll can be found !");

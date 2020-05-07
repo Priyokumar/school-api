@@ -27,7 +27,7 @@ import com.school.api.error.exception.BadRequestException;
 import com.school.api.error.exception.InternalServerException;
 import com.school.api.error.exception.NotFoundException;
 import com.school.api.hr.entity.Employee;
-import com.school.api.hr.entity.PersonalInfo;
+import com.school.api.hr.entity.EmployeePersonalInfo;
 
 @Service
 public class DocUploadService {
@@ -147,7 +147,7 @@ public class DocUploadService {
 		if (!ScUtil.isAllPresent(docFor, type))
 			throw new NotFoundException("Could not update document.");
 
-		PersonalInfo personalInfo = employee.getPersonalInfo();
+		EmployeePersonalInfo personalInfo = employee.getPersonalInfo();
 		if (!ScUtil.isAllPresent(personalInfo)) {
 			throw new InternalServerException("Could not update document.");
 		}

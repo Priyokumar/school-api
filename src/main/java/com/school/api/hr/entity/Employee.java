@@ -71,7 +71,7 @@ public class Employee implements Serializable {
 	
 	@OneToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "DESIGNATION")
-	private Designation designation;
+	private EmployeeDesignation designation;
 
 	@Column(name = "SAMEASPERMANENT_ADDRESS")
 	private Boolean sameAsPermanentAddress = false;
@@ -88,16 +88,16 @@ public class Employee implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "employee", orphanRemoval = true)
 	@PrimaryKeyJoinColumn
-	private PersonalInfo personalInfo = new PersonalInfo();
+	private EmployeePersonalInfo personalInfo = new EmployeePersonalInfo();
 
 	@OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
 	@PrimaryKeyJoinColumn
-	private AcademicBackground highestQualification = new AcademicBackground();
+	private EmployeeAcademicBackground highestQualification = new EmployeeAcademicBackground();
 
-	@OneToMany(targetEntity = DocumentDetails.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = EmployeeDocumentDetails.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID")
 	@Fetch(value = FetchMode.SUBSELECT)
-	private List<DocumentDetails> documents = new ArrayList<>();
+	private List<EmployeeDocumentDetails> documents = new ArrayList<>();
 
 	public String getId() {
 		return id;
@@ -163,11 +163,11 @@ public class Employee implements Serializable {
 		this.employeeType = employeeType;
 	}
 
-	public Designation getDesignation() {
+	public EmployeeDesignation getDesignation() {
 		return designation;
 	}
 
-	public void setDesignation(Designation designation) {
+	public void setDesignation(EmployeeDesignation designation) {
 		this.designation = designation;
 	}
 
@@ -195,27 +195,27 @@ public class Employee implements Serializable {
 		this.permanentAddress = permanentAddress;
 	}
 
-	public PersonalInfo getPersonalInfo() {
+	public EmployeePersonalInfo getPersonalInfo() {
 		return personalInfo;
 	}
 
-	public void setPersonalInfo(PersonalInfo personalInfo) {
+	public void setPersonalInfo(EmployeePersonalInfo personalInfo) {
 		this.personalInfo = personalInfo;
 	}
 
-	public AcademicBackground getHighestQualification() {
+	public EmployeeAcademicBackground getHighestQualification() {
 		return highestQualification;
 	}
 
-	public void setHighestQualification(AcademicBackground highestQualification) {
+	public void setHighestQualification(EmployeeAcademicBackground highestQualification) {
 		this.highestQualification = highestQualification;
 	}
 
-	public List<DocumentDetails> getDocuments() {
+	public List<EmployeeDocumentDetails> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(List<DocumentDetails> documents) {
+	public void setDocuments(List<EmployeeDocumentDetails> documents) {
 		this.documents = documents;
 	}
 

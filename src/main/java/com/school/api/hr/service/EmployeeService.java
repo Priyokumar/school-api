@@ -26,19 +26,19 @@ import com.school.api.common.vo.Operator;
 import com.school.api.common.vo.RefType;
 import com.school.api.error.exception.InternalServerException;
 import com.school.api.error.exception.NotFoundException;
-import com.school.api.hr.dto.AcademicBackgroundDTO;
-import com.school.api.hr.dto.DesignationDTO;
+import com.school.api.hr.dto.EmployeeAcademicBackgroundDTO;
 import com.school.api.hr.dto.EmployeeDTO;
+import com.school.api.hr.dto.EmployeeDesignationDTO;
+import com.school.api.hr.dto.EmployeePersonalInfoDTO;
 import com.school.api.hr.dto.EmployeeResponseDTO;
 import com.school.api.hr.dto.EmployeesResponseDTO;
-import com.school.api.hr.dto.PersonalInfoDTO;
-import com.school.api.hr.entity.AcademicBackground;
-import com.school.api.hr.entity.Designation;
 import com.school.api.hr.entity.Employee;
-import com.school.api.hr.entity.Salary;
-import com.school.api.hr.entity.PersonalInfo;
+import com.school.api.hr.entity.EmployeeAcademicBackground;
+import com.school.api.hr.entity.EmployeeDesignation;
+import com.school.api.hr.entity.EmployeePayrollSalary;
+import com.school.api.hr.entity.EmployeePersonalInfo;
 import com.school.api.hr.repository.IEmployeeRepository;
-import com.school.api.hr.repository.ISalaryRepository;
+import com.school.api.hr.repository.IEmployeeSalaryRepository;
 
 @Service
 public class EmployeeService {
@@ -50,7 +50,7 @@ public class EmployeeService {
 	private IEmployeeRepository employeeRepository;
 	
 	@Autowired
-	private ISalaryRepository employeeSalaryRepository;
+	private IEmployeeSalaryRepository employeeSalaryRepository;
 	
 	@Autowired
 	private DocUploadService docUploadService;
@@ -122,9 +122,9 @@ public class EmployeeService {
 		employeeDTO.setEmpCode(employee.getEmpCode());
 		employeeDTO.setProfilePic(setDocDtoDoc(employee.getProfilePic()));
 		
-		Designation designation = employee.getDesignation();
+		EmployeeDesignation designation = employee.getDesignation();
 		if(ScUtil.isAllPresent(designation)) {
-			employeeDTO.setDesignation(new DesignationDTO());
+			employeeDTO.setDesignation(new EmployeeDesignationDTO());
 			employeeDTO.getDesignation().setId(designation.getId());
 			employeeDTO.getDesignation().setTitle(designation.getTitle());
 		}
@@ -170,10 +170,10 @@ public class EmployeeService {
 			employeeDTO.setCorrespondentAddress(corrAddrDto);
 		}
 
-		PersonalInfo personalInfo = employee.getPersonalInfo();
+		EmployeePersonalInfo personalInfo = employee.getPersonalInfo();
 		if (ScUtil.isAllPresent(personalInfo)) {
 
-			PersonalInfoDTO pcInfoDto = new PersonalInfoDTO();
+			EmployeePersonalInfoDTO pcInfoDto = new EmployeePersonalInfoDTO();
 
 			pcInfoDto.setAadharCard(personalInfo.getAadharCard());
 			pcInfoDto.setDrivingLicence(personalInfo.getDrivingLicence());
@@ -184,10 +184,10 @@ public class EmployeeService {
 			employeeDTO.setPersonalInfo(pcInfoDto);
 		}
 
-		AcademicBackground highestQualification = employee.getHighestQualification();
+		EmployeeAcademicBackground highestQualification = employee.getHighestQualification();
 		if (ScUtil.isAllPresent(highestQualification)) {
 
-			AcademicBackgroundDTO acaBgDTO = new AcademicBackgroundDTO();
+			EmployeeAcademicBackgroundDTO acaBgDTO = new EmployeeAcademicBackgroundDTO();
 			acaBgDTO.setBoard(highestQualification.getBoard());
 			acaBgDTO.setId(highestQualification.getId());
 			acaBgDTO.setHighestQualification(highestQualification.getHighestQualification());
@@ -222,6 +222,8 @@ public class EmployeeService {
 			Optional<Employee> employeeOpt = employeeRepository.findById(id);
 			if (!employeeOpt.isPresent())
 				throw new NotFoundException("No employee can be found !");
+			
+			employee = employeeOpt.get();
 		}
 
 		if (ScUtil.isAllPresent(id)) {
@@ -229,12 +231,10 @@ public class EmployeeService {
 		} else {
 			employee.setStatus("Active");
 		}
-
-		employee.setId(employeeDTO.getId());
 		
-		DesignationDTO designationDTO = employeeDTO.getDesignation();
+		EmployeeDesignationDTO designationDTO = employeeDTO.getDesignation();
 		if(ScUtil.isAllPresent(designationDTO)) {
-			employee.setDesignation(commonService.findById(designationDTO.getId(), Designation.class));
+			employee.setDesignation(commonService.findById(designationDTO.getId(), EmployeeDesignation.class));
 		}
 		employee.setDob(ScDateUtil.stringToDate(employeeDTO.getDob()));
 		employee.setEmail(employeeDTO.getEmail());
@@ -246,6 +246,7 @@ public class EmployeeService {
 		employee.setMiddleName(employeeDTO.getMiddleName());
 		employee.setGender(employeeDTO.getGender());
 		employee.setSameAsPermanentAddress(employeeDTO.getSameAsPermanentAddress());
+		employee.setEmployeeType(employeeDTO.getEmployeeType());
 
 		if (employee.getSameAsPermanentAddress() == true) {
 			if (ScUtil.isAllPresent(employee.getPermanentAddress())) {
@@ -280,13 +281,13 @@ public class EmployeeService {
 			employee.setCorrespondentAddress(correspondentAddress);
 		}
 
-		PersonalInfoDTO pcInfoDto = employeeDTO.getPersonalInfo();
+		EmployeePersonalInfoDTO pcInfoDto = employeeDTO.getPersonalInfo();
 		if (ScUtil.isAllPresent(pcInfoDto)) {
 
-			PersonalInfo personalInfo = employee.getPersonalInfo();
+			EmployeePersonalInfo personalInfo = employee.getPersonalInfo();
 
 			if (!ScUtil.isAllPresent(personalInfo))
-				personalInfo = new PersonalInfo();
+				personalInfo = new EmployeePersonalInfo();
 
 			personalInfo.setAadharCard(pcInfoDto.getAadharCard());
 			personalInfo.setDrivingLicence(pcInfoDto.getDrivingLicence());
@@ -298,10 +299,10 @@ public class EmployeeService {
 			employee.getPersonalInfo().setEmployee(employee);
 		}
 
-		AcademicBackgroundDTO highestQualificationDto = employeeDTO.getHighestQualification();
+		EmployeeAcademicBackgroundDTO highestQualificationDto = employeeDTO.getHighestQualification();
 		if (ScUtil.isAllPresent(highestQualificationDto)) {
 
-			AcademicBackground academicBackground = new AcademicBackground();
+			EmployeeAcademicBackground academicBackground = new EmployeeAcademicBackground();
 			academicBackground.setBoard(highestQualificationDto.getBoard());
 			academicBackground.setId(highestQualificationDto.getId());
 			academicBackground.setHighestQualification(highestQualificationDto.getHighestQualification());
@@ -342,12 +343,13 @@ public class EmployeeService {
 		ArrayList<Filter> filters = new ArrayList<>();
 		filters.add(new Filter("employee", Operator.EQUAL, FieldType.STRING, empId));
 
-		Optional<Salary> employeeOpt = employeeSalaryRepository.findByEmployee(empId);
+		Optional<EmployeePayrollSalary> employeeOpt = employeeSalaryRepository.findByEmployee(empId);
 		
-		Salary employeeSalary = null;
-		if (!employeeOpt.isPresent())
-			employeeSalary = new Salary();
-		employeeSalary.setEmployee(employee);
+		EmployeePayrollSalary employeeSalary = null;
+		if (!employeeOpt.isPresent()) {
+			employeeSalary = new EmployeePayrollSalary();
+			employeeSalary.setEmployee(employee);
+		}
 
 		commonService.save(employeeSalary);
 	}
@@ -371,7 +373,7 @@ public class EmployeeService {
 		ArrayList<Filter> filters = new ArrayList<>();
 		filters.add(new Filter("employee", Operator.EQUAL, FieldType.NUMBER, id));
 
-		Optional<Salary> employeeOpt = employeeSalaryRepository.findByEmployee(id);
+		Optional<EmployeePayrollSalary> employeeOpt = employeeSalaryRepository.findByEmployee(id);
 		if (employeeOpt.isPresent())
 			commonService.delete(employeeOpt.get());
 	}

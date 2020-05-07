@@ -11,32 +11,32 @@ import com.school.api.common.dto.ActionResponseDTO;
 import com.school.api.common.dto.ApiUtilDTO;
 import com.school.api.common.utils.ScUtil;
 import com.school.api.error.exception.NotFoundException;
-import com.school.api.hr.dto.SalariesResponseDTO;
-import com.school.api.hr.dto.SalaryDTO;
-import com.school.api.hr.dto.SalaryRequestDTO;
-import com.school.api.hr.dto.SalaryResponseDTO;
-import com.school.api.hr.entity.Salary;
-import com.school.api.hr.repository.ISalaryRepository;
+import com.school.api.hr.dto.EmployeeSalariesResponseDTO;
+import com.school.api.hr.dto.EmployeeSalaryDTO;
+import com.school.api.hr.dto.EmployeeSalaryRequestDTO;
+import com.school.api.hr.dto.EmployeeSalaryResponseDTO;
+import com.school.api.hr.entity.EmployeePayrollSalary;
+import com.school.api.hr.repository.IEmployeeSalaryRepository;
 
 @Service
 public class SalaryService {
 
 	@Autowired
-	ISalaryRepository salaryRepository;
+	private IEmployeeSalaryRepository salaryRepository;
 
 	@Autowired
-	EmployeeService employeeService;
+	private EmployeeService employeeService;
 
-	public SalariesResponseDTO findAllSalaries() {
+	public EmployeeSalariesResponseDTO findAllSalaries() {
 
-		SalariesResponseDTO res = new SalariesResponseDTO();
+		EmployeeSalariesResponseDTO res = new EmployeeSalariesResponseDTO();
 
-		List<Salary> salaries = (List<Salary>) salaryRepository.findAll();
+		List<EmployeePayrollSalary> salaries = (List<EmployeePayrollSalary>) salaryRepository.findAll();
 
 		if (!ScUtil.isAllPresent(salaries))
 			throw new NotFoundException("No salary can be found !");
 
-		List<SalaryDTO> salariesDTO = new ArrayList<SalaryDTO>();
+		List<EmployeeSalaryDTO> salariesDTO = new ArrayList<EmployeeSalaryDTO>();
 
 		salaries.forEach(salary -> {
 			salariesDTO.add(setSalaryToDTO(salary));
@@ -48,9 +48,9 @@ public class SalaryService {
 		return res;
 	}
 
-	private SalaryDTO setSalaryToDTO(Salary salary) {
+	private EmployeeSalaryDTO setSalaryToDTO(EmployeePayrollSalary salary) {
 
-		SalaryDTO salaryDTO = new SalaryDTO();
+		EmployeeSalaryDTO salaryDTO = new EmployeeSalaryDTO();
 		salaryDTO.setId(salary.getId());
 		salaryDTO.setSalaryAmount(salary.getSalaryAmount());
 
@@ -59,15 +59,15 @@ public class SalaryService {
 		return salaryDTO;
 	}
 
-	public ActionResponseDTO UpdateSalary(SalaryRequestDTO salaryRequestDTO, String id) {
+	public ActionResponseDTO UpdateSalary(EmployeeSalaryRequestDTO salaryRequestDTO, String id) {
 
 		ActionResponseDTO res = new ActionResponseDTO();
 
-		Optional<Salary> salaryOpt = salaryRepository.findById(id);
+		Optional<EmployeePayrollSalary> salaryOpt = salaryRepository.findById(id);
 		if (!salaryOpt.isPresent()) {
 			throw new NotFoundException("Salary not found.");
 		}
-		Salary salary = salaryOpt.get();
+		EmployeePayrollSalary salary = salaryOpt.get();
 		salary.setSalaryAmount(salaryRequestDTO.getSalaryAmount());
 		salaryRepository.save(salary);
 
@@ -84,16 +84,16 @@ public class SalaryService {
 		return res;
 	}
 
-	public SalaryResponseDTO findSalary(String id) {
+	public EmployeeSalaryResponseDTO findSalary(String id) {
 
-		SalaryResponseDTO res = new SalaryResponseDTO();
+		EmployeeSalaryResponseDTO res = new EmployeeSalaryResponseDTO();
 
-		Optional<Salary> salaryOpt = salaryRepository.findById(id);
+		Optional<EmployeePayrollSalary> salaryOpt = salaryRepository.findById(id);
 
 		if (!salaryOpt.isPresent())
 			throw new NotFoundException("No designation can be found !");
 
-		SalaryDTO designationDTO = setSalaryToDTO(salaryOpt.get());
+		EmployeeSalaryDTO designationDTO = setSalaryToDTO(salaryOpt.get());
 
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
 		res.setData(designationDTO);
