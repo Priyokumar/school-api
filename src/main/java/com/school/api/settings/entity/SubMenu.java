@@ -18,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class SubMenu implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(generator = "idGenerator")
 	@GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
@@ -30,13 +30,13 @@ public class SubMenu implements Serializable {
 
 	@Column(name = "MENU_ORDER")
 	private String order;
-	
+
 	@Column(name = "ICON")
 	private String icon;
 
 	@Column(name = "PATH")
 	private String path;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MENU_ID")
 	private Menu menu;
@@ -88,6 +88,5 @@ public class SubMenu implements Serializable {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-	
-	
+
 }

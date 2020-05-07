@@ -5,17 +5,17 @@ import java.util.List;
 public class EmployeeAttendanceReportDTO {
 
 	private EmployeeDTO employee;
-	
+
 	private int totalLate;
-	
+
 	private int totalAbsent;
-	
+
 	private int totalHalfDay;
-	
+
 	private int totalHoliday;
-	
+
 	private int totalPresent;
-	
+
 	private List<EmployeeAttendanceDTO> attendances;
 
 	public EmployeeDTO getEmployee() {
@@ -73,7 +73,5 @@ public class EmployeeAttendanceReportDTO {
 	public void setAttendances(List<EmployeeAttendanceDTO> attendances) {
 		this.attendances = attendances;
 	}
-	
-	
-	
+
 }

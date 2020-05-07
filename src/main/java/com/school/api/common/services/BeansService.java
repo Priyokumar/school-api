@@ -8,13 +8,13 @@ import com.school.api.config.Beans;
 
 @Service
 public class BeansService {
-	
+
 	@Autowired
-    private ApplicationContext applicationContext;
-	
+	private ApplicationContext applicationContext;
+
 	public Beans getBeans() {
 		Beans beans = (Beans) applicationContext.getBean(Beans.class);
-		return beans != null? beans: null;
+		return beans != null ? beans : null;
 	}
 
 }

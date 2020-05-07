@@ -31,10 +31,10 @@ public class SectionService {
 
 		if (!ScUtil.isAllPresent(sections))
 			throw new NotFoundException("No sections can be found !");
-		
+
 		List<SectionDTO> sectionsDTO = new ArrayList<SectionDTO>();
-		
-		sections.forEach(section->{
+
+		sections.forEach(section -> {
 			sectionsDTO.add(setSectionToDTO(section));
 		});
 
@@ -43,13 +43,13 @@ public class SectionService {
 
 		return res;
 	}
-	
+
 	private SectionDTO setSectionToDTO(Section section) {
-		
+
 		SectionDTO sectionDTO = new SectionDTO();
 		sectionDTO.setId(section.getId());
 		sectionDTO.setTitle(section.getTitle());
-		
+
 		return sectionDTO;
 	}
 
@@ -58,15 +58,15 @@ public class SectionService {
 		ActionResponseDTO res = new ActionResponseDTO();
 
 		Section section = new Section();
-		
+
 		if (ScUtil.isAllPresent(id)) {
 			Optional<Section> sectionOpt = sectionRepository.findById(id);
-			if(sectionOpt.isPresent()) {
+			if (sectionOpt.isPresent()) {
 				throw new NotFoundException("Section not found.");
 			}
 			section = sectionOpt.get();
 		}
-		
+
 		section.setTitle(sectionDTO.getTitle());
 
 		sectionRepository.save(section);
@@ -94,7 +94,7 @@ public class SectionService {
 			throw new NotFoundException("No section can be found !");
 
 		SectionDTO sectionToDTO = setSectionToDTO(sectionOpt.get());
-		
+
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
 		res.setData(sectionToDTO);
 

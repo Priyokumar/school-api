@@ -34,7 +34,8 @@ public class EmployeePayrollSalaryController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ActionResponseDTO updateSalary(@Valid @RequestBody EmployeeSalaryRequestDTO salaryRequestDTO, @PathVariable("id") String id) {
+	public ActionResponseDTO updateSalary(@Valid @RequestBody EmployeeSalaryRequestDTO salaryRequestDTO,
+			@PathVariable("id") String id) {
 		return salaryService.UpdateSalary(salaryRequestDTO, id);
 	}
 

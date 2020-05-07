@@ -36,7 +36,7 @@ public class EmployeePayrollService {
 
 	@Autowired
 	private CommonService commonService;
-	
+
 	@Autowired
 	private EmployeeService employeeService;
 
@@ -92,9 +92,9 @@ public class EmployeePayrollService {
 		payrollDTO.setEmployee(employeeService.setEmployeeToDto(payroll.getEmployee()));
 		payrollDTO.setEarnings(new ArrayList<EmployeePayrollEarningDTO>());
 		payrollDTO.setDeductions(new ArrayList<EmployeePayrollDeductionDTO>());
-		
+
 		List<EmployeePayrollEarning> earnings = payroll.getEarnings();
-		
+
 		if (ScUtil.isAllPresent(earnings)) {
 
 			for (EmployeePayrollEarning earning : earnings) {

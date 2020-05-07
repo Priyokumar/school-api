@@ -34,5 +34,5 @@ public class ClassDTO {
 	public void setSections(List<SectionDTO> sections) {
 		this.sections = sections;
 	}
-	
+
 }

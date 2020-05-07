@@ -27,13 +27,13 @@ public class ClassService {
 
 	@Autowired
 	IClassRepository classRepository;
-	
+
 	@Autowired
 	CommonService commonService;
-	
+
 	@Autowired
 	ISectionRepository sectionRepository;
-	
+
 	public ClassesResponseDTO findAllClasses() {
 
 		ClassesResponseDTO res = new ClassesResponseDTO();
@@ -42,10 +42,10 @@ public class ClassService {
 
 		if (!ScUtil.isAllPresent(classes))
 			throw new NotFoundException("No class can be found !");
-		
+
 		List<ClassDTO> classesDTO = new ArrayList<ClassDTO>();
-		
-		classes.forEach(clazz->{
+
+		classes.forEach(clazz -> {
 			classesDTO.add(setClassToDTO(clazz));
 		});
 
@@ -54,25 +54,25 @@ public class ClassService {
 
 		return res;
 	}
-	
+
 	private ClassDTO setClassToDTO(Class clazz) {
-		
+
 		ClassDTO classDTO = new ClassDTO();
 		classDTO.setId(clazz.getId());
 		classDTO.setTitle(clazz.getTitle());
-		
+
 		List<Section> sections = clazz.getSections();
-		
-		if(ScUtil.isAllPresent(sections)) {
-			
+
+		if (ScUtil.isAllPresent(sections)) {
+
 			List<SectionDTO> sectionsDTO = new ArrayList<SectionDTO>();
-			
-			sections.forEach(section->{
-				
+
+			sections.forEach(section -> {
+
 				SectionDTO sectionDTO = new SectionDTO();
 				sectionDTO.setId(section.getId());
 				sectionDTO.setTitle(section.getTitle());
-				
+
 				sectionsDTO.add(sectionDTO);
 			});
 			classDTO.setSections(sectionsDTO);
@@ -85,28 +85,28 @@ public class ClassService {
 		ActionResponseDTO res = new ActionResponseDTO();
 
 		Class clazz = new Class();
-		
+
 		if (ScUtil.isAllPresent(id)) {
 			Optional<Class> classOpt = classRepository.findById(id);
-			
-			if(classOpt.isPresent()) {
+
+			if (classOpt.isPresent()) {
 				throw new NotFoundException("Class not found.");
 			}
 			clazz = classOpt.get();
 		}
-		
+
 		clazz.setTitle(classRequestDTO.getTitle());
-		
+
 		List<String> sectionIds = classRequestDTO.getSections();
-		
-		if(ScUtil.isAllPresent(sectionIds)) {
+
+		if (ScUtil.isAllPresent(sectionIds)) {
 			List<Section> sections = new ArrayList<Section>();
-			sectionIds.forEach(sectionId->{
+			sectionIds.forEach(sectionId -> {
 				Optional<Section> sectionOpt = sectionRepository.findById(sectionId);
-				if(sectionOpt.isPresent()) {
+				if (sectionOpt.isPresent()) {
 					sections.add(sectionOpt.get());
-				}else {
-					System.out.println("Section with id "+sectionId+" could not found.");
+				} else {
+					System.out.println("Section with id " + sectionId + " could not found.");
 				}
 			});
 			clazz.setSections(sections);
@@ -136,7 +136,7 @@ public class ClassService {
 			throw new NotFoundException("No class can be found !");
 
 		ClassDTO classToDTO = setClassToDTO(classOpt.get());
-		
+
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
 		res.setData(classToDTO);
 

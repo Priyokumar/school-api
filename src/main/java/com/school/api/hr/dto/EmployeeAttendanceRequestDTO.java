@@ -42,5 +42,4 @@ public class EmployeeAttendanceRequestDTO {
 		this.note = note;
 	}
 
-	
 }

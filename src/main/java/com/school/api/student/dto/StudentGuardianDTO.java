@@ -71,7 +71,5 @@ public class StudentGuardianDTO {
 	public void setIncome(Double income) {
 		this.income = income;
 	}
-	
-	
 
 }

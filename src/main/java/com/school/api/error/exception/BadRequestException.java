@@ -9,6 +9,5 @@ public class BadRequestException extends ApiErrorException {
 	public BadRequestException(String detail) {
 		super(HttpStatus.BAD_REQUEST.value(), detail, HttpStatus.BAD_REQUEST.name());
 	}
-	
-	
+
 }

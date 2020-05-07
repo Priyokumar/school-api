@@ -3,7 +3,7 @@ package com.school.api.hr.dto;
 public class EmployeeDesignationDTO {
 
 	private String id;
-	
+
 	private String title;
 
 	public String getId() {
@@ -21,7 +21,5 @@ public class EmployeeDesignationDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	
-	
+
 }

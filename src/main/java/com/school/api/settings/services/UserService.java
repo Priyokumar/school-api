@@ -121,7 +121,7 @@ public class UserService {
 
 		if (!ScUtil.isAllPresent(user))
 			throw new NotFoundException("No users can be found !");
-		
+
 		UserDTO userDTO = setUserToDTO(user);
 
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));

@@ -13,5 +13,5 @@ public class ApiUtilDTO {
 
 		return new ApiMessageDTO(false, HttpStatus.CREATED.value(), detail, HttpStatus.CREATED.name());
 	}
-	
+
 }

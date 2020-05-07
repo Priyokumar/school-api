@@ -1,9 +1,9 @@
 package com.school.api.common.dto;
 
 public class DocumentDTO {
-	
+
 	private String id;
-	
+
 	private String docUrl;
 
 	public String getId() {

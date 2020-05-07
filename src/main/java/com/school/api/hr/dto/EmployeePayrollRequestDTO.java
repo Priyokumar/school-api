@@ -10,7 +10,7 @@ public class EmployeePayrollRequestDTO {
 	private String id;
 
 	private String year;
-	
+
 	private String status;
 
 	private String month;
@@ -117,5 +117,5 @@ public class EmployeePayrollRequestDTO {
 	public void setDeductions(List<EmployeePayrollDeductionDTO> deductions) {
 		this.deductions = deductions;
 	}
-	
+
 }

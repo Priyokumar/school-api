@@ -38,7 +38,7 @@ public class Employee implements Serializable {
 
 	@Column(name = "EMP_CODE")
 	private String empCode;
-	
+
 	@Column(name = "EMPLOYEE_TYPE")
 	private String employeeType;
 
@@ -68,7 +68,7 @@ public class Employee implements Serializable {
 
 	@Column(name = "JOINING_DATE")
 	private Date joiningDate;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "DESIGNATION")
 	private EmployeeDesignation designation;

@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-
 @Entity
 @Table(name = "SC_EMP_ATTENDENCE")
 public class EmployeeAttendance implements Serializable {
@@ -26,17 +25,17 @@ public class EmployeeAttendance implements Serializable {
 	@GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
 	@Column(name = "ID", nullable = false, length = 100)
 	private String id;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "EMPLOYEE")
 	private Employee employee;
-	
+
 	@Column(name = "ATTENDANCE_TYPE")
 	private String attendanceType;
-	
+
 	@Column(name = "DAY")
-	private String note;	
-	
+	private String note;
+
 	@Column(name = "DATE")
 	private Date date;
 
@@ -79,5 +78,5 @@ public class EmployeeAttendance implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
 }

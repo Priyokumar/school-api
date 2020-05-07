@@ -16,13 +16,13 @@ import org.hibernate.annotations.GenericGenerator;
 public class AcademicYear implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(generator = "idGenerator")
 	@GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
 	@Column(name = "ID", nullable = false, length = 100)
 	private String id;
-	
+
 	@Column(name = "YEAR")
 	@NotBlank(message = "year is mandatory")
 	private String year;
@@ -30,7 +30,7 @@ public class AcademicYear implements Serializable {
 	@Column(name = "TITLE")
 	@NotBlank(message = "title is mandatory")
 	private String title;
-	
+
 	@Column(name = "STATUS")
 	@NotBlank(message = "status is mandatory")
 	private String status;
@@ -66,6 +66,5 @@ public class AcademicYear implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 
 }

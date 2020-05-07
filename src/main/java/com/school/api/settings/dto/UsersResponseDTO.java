@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.school.api.common.dto.ApiMessageDTO;
 
-
 public class UsersResponseDTO {
 
 	private List<UserDTO> data;

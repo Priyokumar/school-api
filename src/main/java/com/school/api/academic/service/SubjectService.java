@@ -66,9 +66,9 @@ public class SubjectService {
 
 		Subject subject = new Subject();
 		if (ScUtil.isAllPresent(id)) {
-			
+
 			Optional<Subject> subjectOpt = subjectRepository.findById(id);
-			if(!subjectOpt.isPresent()) {
+			if (!subjectOpt.isPresent()) {
 				throw new NotFoundException("Subject not found.");
 			}
 			subject = subjectOpt.get();
@@ -98,7 +98,7 @@ public class SubjectService {
 
 		if (!subjectOpt.isPresent())
 			throw new NotFoundException("No subject can be found !");
-		
+
 		SubjectDTO subjectDTO = setSubjectToDTO(subjectOpt.get());
 
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));

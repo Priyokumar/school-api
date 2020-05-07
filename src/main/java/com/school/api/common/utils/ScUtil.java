@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-
 public class ScUtil {
 
 	public static boolean isAllPresent(Object... objects) {

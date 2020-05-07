@@ -26,6 +26,5 @@ public class EmployeePayrollsResponseDTO {
 	public void setApiMessage(ApiMessageDTO apiMessage) {
 		this.apiMessage = apiMessage;
 	}
-	
-	
+
 }

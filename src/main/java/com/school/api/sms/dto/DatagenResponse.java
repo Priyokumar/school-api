@@ -1,20 +1,19 @@
 package com.school.api.sms.dto;
 
-
 public class DatagenResponse {
 
 	private String status;
-	
-	private  int totalnumbers_sbmited;
-	
+
+	private int totalnumbers_sbmited;
+
 	private long campg_id;
-	
+
 	private String logid;
-	
+
 	private String code;
-	
+
 	private String ts;
-	
+
 	private String desc;
 
 	public String getStatus() {
@@ -78,7 +77,5 @@ public class DatagenResponse {
 		return "ScDatagenResponse [status=" + status + ", totalnumbers_sbmited=" + totalnumbers_sbmited + ", campg_id="
 				+ campg_id + ", logid=" + logid + ", code=" + code + ", ts=" + ts + ", desc=" + desc + "]";
 	}
-	
-	
-	
+
 }

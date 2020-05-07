@@ -12,10 +12,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "SC_CLASS_ROOM")
-public class ClassRoom  implements Serializable {
+public class ClassRoom implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(generator = "idGenerator")
 	@GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
@@ -25,7 +25,7 @@ public class ClassRoom  implements Serializable {
 	@Column(name = "TITLE")
 	@NotBlank(message = "title is mandatory")
 	private String title;
-	
+
 	@Column(name = "STATUS")
 	@NotBlank(message = "status is mandatory")
 	private String status;
@@ -53,7 +53,5 @@ public class ClassRoom  implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
 
 }

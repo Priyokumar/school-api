@@ -11,13 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import com.school.api.common.entity.Address;
 import com.school.api.common.entity.Document;
-
 
 @Entity
 @Table(name = "SC_STUDENT")
@@ -81,6 +81,10 @@ public class Student implements Serializable {
 
 	@Column(name = "PHYSICALLY_CHALLENGED")
 	private Boolean physicallyChallenged;
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "student", orphanRemoval = true)
+	@PrimaryKeyJoinColumn
+	private Admission admission = new Admission();
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "PROFILE_PIC")
@@ -313,6 +317,14 @@ public class Student implements Serializable {
 
 	public void setPermanentAddress(Address permanentAddress) {
 		this.permanentAddress = permanentAddress;
+	}
+
+	public Admission getAdmission() {
+		return admission;
+	}
+
+	public void setAdmission(Admission admission) {
+		this.admission = admission;
 	}
 
 }

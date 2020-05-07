@@ -11,5 +11,5 @@ public class FileResponseDTO {
 	public void setFile(byte[] file) {
 		this.file = file;
 	}
-	
+
 }

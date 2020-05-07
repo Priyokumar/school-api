@@ -42,6 +42,8 @@ public class StudentDTO {
 	private String nationality;
 
 	private String aadhaarNo;
+	
+	private AdmissionDTO admission = new AdmissionDTO();
 
 	private Boolean physicallyChallenged;
 
@@ -91,6 +93,14 @@ public class StudentDTO {
 
 	public String getMiddleName() {
 		return middleName;
+	}
+
+	public AdmissionDTO getAdmission() {
+		return admission;
+	}
+
+	public void setAdmission(AdmissionDTO admission) {
+		this.admission = admission;
 	}
 
 	public StudentGuardianDTO getFatherInfo() {

@@ -19,12 +19,12 @@ import com.school.api.settings.dto.UserRequestDTO;
 import com.school.api.settings.dto.UserResponseDTO;
 import com.school.api.settings.dto.UsersResponseDTO;
 import com.school.api.settings.services.UserService;
-	
+
 @RestController
 @RequestMapping("v1/api/users")
 public class UserController {
 
-	@Autowired	
+	@Autowired
 	private UserService userService;
 
 	@GetMapping
@@ -34,12 +34,12 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<ActionResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-		
+
 		ActionResponseDTO response = userService.createOrUpdateUser(userRequestDTO, null);
 
 		ResponseEntity<ActionResponseDTO> responseEntity = new ResponseEntity<ActionResponseDTO>(response,
 				HttpStatus.CREATED);
-		
+
 		return responseEntity;
 	}
 
@@ -49,7 +49,8 @@ public class UserController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ActionResponseDTO updateUser(@Valid @RequestBody UserRequestDTO userRequestDTO, @PathVariable("id") String id) {
+	public ActionResponseDTO updateUser(@Valid @RequestBody UserRequestDTO userRequestDTO,
+			@PathVariable("id") String id) {
 		return userService.createOrUpdateUser(userRequestDTO, id);
 	}
 

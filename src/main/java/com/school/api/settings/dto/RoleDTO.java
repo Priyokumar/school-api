@@ -8,9 +8,9 @@ public class RoleDTO {
 	private String id;
 
 	private String name;
-	
+
 	private String desc;
-	
+
 	private List<MenuDTO> menus = new ArrayList<>();
 
 	public String getId() {
@@ -44,6 +44,5 @@ public class RoleDTO {
 	public void setMenus(List<MenuDTO> menus) {
 		this.menus = menus;
 	}
-	
-	
+
 }

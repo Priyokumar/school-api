@@ -22,7 +22,7 @@ import com.school.api.settings.services.MenuService;
 @RestController
 @RequestMapping("/v1/api/menus")
 public class MenuController {
-	
+
 	@Autowired
 	private MenuService menuService;
 
@@ -34,7 +34,8 @@ public class MenuController {
 	@PostMapping
 	public ResponseEntity<ActionResponseDTO> createRole(@RequestBody MenuDTO menuDTO) {
 		ActionResponseDTO response = menuService.createOrUpdateMenu(menuDTO, null);
-		ResponseEntity<ActionResponseDTO> responseEntity = new ResponseEntity<ActionResponseDTO>(response, HttpStatus.CREATED);
+		ResponseEntity<ActionResponseDTO> responseEntity = new ResponseEntity<ActionResponseDTO>(response,
+				HttpStatus.CREATED);
 		return responseEntity;
 	}
 

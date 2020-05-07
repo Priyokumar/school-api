@@ -32,11 +32,11 @@ public class StudentAttendanceService {
 
 	@Autowired
 	private CommonService commonService;
-	
+
 	public StudentAttendanceResponseDTO findAttendance(String empId, String dateStr) {
-		
+
 		StudentAttendanceResponseDTO res = new StudentAttendanceResponseDTO();
-		
+
 		Date date = ScDateUtil.stringToDate(dateStr);
 
 		Optional<StudentAttendance> studentOpt = attendanceRepository.findAttendanceByStudentAndDate(date, empId);
@@ -72,7 +72,7 @@ public class StudentAttendanceService {
 
 		return res;
 	}
-	
+
 	public StudentAttendanceDTO setAttendanceToDTO(StudentAttendance attendance) {
 
 		StudentAttendanceDTO attendanceDTO = new StudentAttendanceDTO();
@@ -94,16 +94,16 @@ public class StudentAttendanceService {
 
 		return attendence;
 	}
-	
+
 	public StudentAttendanceReportResponseDTO findAttendanceReport(String month, String year) {
 
 		StudentAttendanceReportResponseDTO res = new StudentAttendanceReportResponseDTO();
 
-		List<StudentAttendance> attendances = attendanceRepository.findAttendanceReport( month, year);
+		List<StudentAttendance> attendances = attendanceRepository.findAttendanceReport(month, year);
 
 		if (!ScUtil.isAllPresent(attendances))
 			throw new NotFoundException("No attendances can be found !");
-		
+
 		System.out.println("\n\n Reports");
 		System.out.println(attendances);
 
@@ -114,5 +114,5 @@ public class StudentAttendanceService {
 
 		return res;
 	}
-	
+
 }

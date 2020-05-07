@@ -101,6 +101,5 @@ public class UserRequestDTO {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	
 
 }

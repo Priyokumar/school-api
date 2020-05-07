@@ -21,13 +21,14 @@ public class StudentAttendanceController {
 
 	@GetMapping
 	public StudentAttendanceResponseDTO findAttendance(@RequestParam(name = "studId", required = true) String studId,
-													   @RequestParam(name = "date", required = true) String date) {
+			@RequestParam(name = "date", required = true) String date) {
 		return attendanceService.findAttendance(studId, date);
 	}
 
 	@GetMapping(value = "/report")
-	public StudentAttendanceReportResponseDTO findAttendanceReport(@RequestParam(name = "month") String month, @RequestParam(name = "year") String year) {
-		return attendanceService.findAttendanceReport(month,year);
+	public StudentAttendanceReportResponseDTO findAttendanceReport(@RequestParam(name = "month") String month,
+			@RequestParam(name = "year") String year) {
+		return attendanceService.findAttendanceReport(month, year);
 	}
 
 	@PostMapping

@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.school.api.academic.entity.Section;
 
-public interface ISectionRepository  extends CrudRepository<Section, String>{
+public interface ISectionRepository extends CrudRepository<Section, String> {
 
 }

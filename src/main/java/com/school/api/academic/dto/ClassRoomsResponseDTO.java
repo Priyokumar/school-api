@@ -26,6 +26,5 @@ public class ClassRoomsResponseDTO {
 	public void setApiMessage(ApiMessageDTO apiMessage) {
 		this.apiMessage = apiMessage;
 	}
-	
-	
+
 }

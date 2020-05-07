@@ -16,10 +16,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "SC_SECTION")
-public class Section  implements Serializable {
+public class Section implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(generator = "idGenerator")
 	@GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
@@ -29,7 +29,7 @@ public class Section  implements Serializable {
 	@Column(name = "TITLE")
 	@NotBlank(message = "title is mandatory")
 	private String title;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "CLASS_ID")
 	private Class clazz;

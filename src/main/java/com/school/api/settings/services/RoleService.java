@@ -36,7 +36,7 @@ public class RoleService {
 
 		if (!ScUtil.isAllPresent(roles))
 			throw new NotFoundException("No role can be found !");
-		
+
 		List<RoleShortDTO> rolesShortDTO = new ArrayList<>();
 
 		roles.forEach(role -> {
@@ -47,7 +47,7 @@ public class RoleService {
 		res.setData(rolesShortDTO);
 		return res;
 	}
-	
+
 	public RoleShortDTO setRoleToDTO(Role role) {
 
 		RoleShortDTO roleShortDTO = new RoleShortDTO();
@@ -75,18 +75,18 @@ public class RoleService {
 		role.setName(roleRequestDTO.getName());
 
 		if (ScUtil.isAllPresent(menuIds)) {
-			
+
 			if (ScUtil.isAllPresent(role.getMenus())) {
 				role.getMenus().clear();
 			}
 			List<Menu> menus = new ArrayList<>();
 
 			menuIds.forEach(menuId -> {
-					Menu menu = commonService.findById(menuId, Menu.class);
-					menus.add(menu);
+				Menu menu = commonService.findById(menuId, Menu.class);
+				menus.add(menu);
 			});
 			role.setMenus(menus);
-		}else {
+		} else {
 			role.setMenus(new ArrayList<Menu>());
 		}
 
@@ -122,20 +122,18 @@ public class RoleService {
 			throw new NotFoundException("No role can be found !");
 
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
-		
+
 		RoleDTO roleDTO = new RoleDTO();
 		roleDTO.setDesc(role.getDesc());
 		roleDTO.setId(role.getId());
 		roleDTO.setName(role.getName());
-		
-		
-		
+
 		List<Menu> menus = role.getMenus();
-		
-		if(ScUtil.isAllPresent(menus)) {
+
+		if (ScUtil.isAllPresent(menus)) {
 			List<MenuDTO> menusDTO = new ArrayList<MenuDTO>();
-			menus.forEach(menu->{
-				
+			menus.forEach(menu -> {
+
 				MenuDTO menuDTO = new MenuDTO();
 				menuDTO.setHasSubmenu(menu.getHasSubmenu());
 				menuDTO.setIcon(menu.getIcon());
@@ -143,15 +141,15 @@ public class RoleService {
 				menuDTO.setOrder(menu.getOrder());
 				menuDTO.setPath(menu.getPath());
 				menuDTO.setTitle(menu.getTitle());
-				
+
 				List<SubMenu> subMenus = menu.getSubMenus();
-				
-				if(ScUtil.isAllPresent(subMenus)) {
-					
+
+				if (ScUtil.isAllPresent(subMenus)) {
+
 					List<SubMenuDTO> subMenusDTO = new ArrayList<>();
-					
-					subMenus.forEach(subMenu->{
-						
+
+					subMenus.forEach(subMenu -> {
+
 						SubMenuDTO subMenuDTO = new SubMenuDTO();
 						subMenuDTO.setIcon(subMenu.getIcon());
 						subMenuDTO.setId(subMenu.getId());

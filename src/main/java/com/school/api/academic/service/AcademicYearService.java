@@ -74,7 +74,7 @@ public class AcademicYearService {
 
 		return res;
 	}
-	
+
 	public AcademicYearResponseDTO findActiveAcademicYear() {
 
 		AcademicYearResponseDTO res = new AcademicYearResponseDTO();

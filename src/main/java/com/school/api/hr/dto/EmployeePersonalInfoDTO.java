@@ -9,7 +9,7 @@ public class EmployeePersonalInfoDTO {
 	private String aadharCard;
 
 	private String voterId;
-	
+
 	private String drivingLicence;
 
 	public String getId() {
@@ -51,5 +51,5 @@ public class EmployeePersonalInfoDTO {
 	public void setDrivingLicence(String drivingLicence) {
 		this.drivingLicence = drivingLicence;
 	}
-	
+
 }

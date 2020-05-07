@@ -18,30 +18,24 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig extends WebMvcConfigurationSupport  {
+public class SwaggerConfig extends WebMvcConfigurationSupport {
 
 	@Bean
-    public Docket api() { 
-		
-		 Contact contact = new Contact("priyon999@gmail.com", "Priyo", "www.priyokumar.in");
-		 @SuppressWarnings("rawtypes")
-		ApiInfo apiInfo = new ApiInfo("My School REST APIs", "APIs for My School.", "0.0.1", "",
-				 contact, "", "", new ArrayList<VendorExtension>());
-		
-        return new Docket(DocumentationType.SWAGGER_2)
-          .apiInfo(apiInfo)
-          .select()                                  
-          .apis(RequestHandlerSelectors.basePackage("com.school.api"))              
-          .paths(PathSelectors.any())                          
-          .build();                                           
-    }
-	
+	public Docket api() {
+
+		Contact contact = new Contact("priyon999@gmail.com", "Priyo", "www.priyokumar.in");
+		@SuppressWarnings("rawtypes")
+		ApiInfo apiInfo = new ApiInfo("My School REST APIs", "APIs for My School.", "0.0.1", "", contact, "", "",
+				new ArrayList<VendorExtension>());
+
+		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo).select()
+				.apis(RequestHandlerSelectors.basePackage("com.school.api")).paths(PathSelectors.any()).build();
+	}
+
 	@Override
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-	
+	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+	}
+
 }

@@ -23,6 +23,5 @@ public class EmployeeAttendanceResponseDTO {
 	public void setApiMessage(ApiMessageDTO apiMessage) {
 		this.apiMessage = apiMessage;
 	}
-	
-	
+
 }

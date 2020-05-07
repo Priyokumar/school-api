@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.api.common.dto.ActionResponseDTO;
@@ -28,8 +27,8 @@ public class StudentController {
 	private StudentService studentService;
 
 	@GetMapping()
-	public StudentsResponseDTO findAllStudents(StudentRequestParam param) {
-		return studentService.findAllStudents(param);
+	public StudentsResponseDTO findStudents(StudentRequestParam param) {
+		return studentService.findStudents(param);
 	}
 
 	@GetMapping(value = "/{id}")
@@ -40,7 +39,8 @@ public class StudentController {
 	@PostMapping
 	public ResponseEntity<ActionResponseDTO> createStudent(@RequestBody StudentDTO studentDTO) {
 		final ActionResponseDTO response = studentService.createOrUpdateStudent(studentDTO, null);
-		ResponseEntity<ActionResponseDTO> responseEntity = new ResponseEntity<ActionResponseDTO>(response, HttpStatus.CREATED);
+		ResponseEntity<ActionResponseDTO> responseEntity = new ResponseEntity<ActionResponseDTO>(response,
+				HttpStatus.CREATED);
 		return responseEntity;
 	}
 

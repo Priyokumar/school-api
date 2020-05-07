@@ -17,6 +17,7 @@ public interface IEmployeePayrollRepository extends CrudRepository<EmployeePayro
 	public List<EmployeePayroll> findPayrollByEmployee(@Param("status") String status);
 
 	@Query(value = "SELECT entity FROM EmployeePayroll entity WHERE entity.status = :status AND entity.employee.id = :empId")
-	public List<EmployeePayroll> findPayrollByEmployeeAndStatus(@Param("status") String status, @Param("empId") String empId);
-	
+	public List<EmployeePayroll> findPayrollByEmployeeAndStatus(@Param("status") String status,
+			@Param("empId") String empId);
+
 }

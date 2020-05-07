@@ -16,19 +16,18 @@ import com.school.api.common.services.BeansService;
 import com.school.api.common.vo.DataGenSMSStatus;
 import com.school.api.sms.dto.DatagenResponse;
 
-
 @Service
 public class DataGenSmsService {
-	
+
 	private static final String URL = "https://global.datagenit.com/API/sms-api.php";
 	private static final String AUTH_KEY = "D!~3385Zi1T3dpjkk";
 	private static final String SENDER_ID = "PESADM";
 
 	@Autowired
 	private BeansService beansService;
-	
+
 	public DatagenResponse sendSms(String contactNumber, String message) {
-		
+
 		DatagenResponse smsResponse = new DatagenResponse();
 		System.out.println("Sending sms");
 		try {
@@ -37,23 +36,18 @@ public class DataGenSmsService {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 			headers.add("cache-control", "no-cache");
-			
-			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL)
-			        .queryParam("auth", AUTH_KEY)
-			        .queryParam("senderid", SENDER_ID)
-			        .queryParam("msisdn", contactNumber)
-			        .queryParam("message", message);
-			
+
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL).queryParam("auth", AUTH_KEY)
+					.queryParam("senderid", SENDER_ID).queryParam("msisdn", contactNumber)
+					.queryParam("message", message);
+
 			HttpEntity<String> entity = new HttpEntity<String>(headers);
-			
-			HttpEntity<String> response = restTemplate.exchange(
-			        builder.toUriString(), 
-			        HttpMethod.GET, 
-			        entity, 
-			        String.class);
-			
+
+			HttpEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,
+					String.class);
+
 			String body = response.getBody();
-			
+
 			ObjectMapper mapper = new ObjectMapper();
 			smsResponse = mapper.readValue(body, DatagenResponse.class);
 			System.out.println("sms response :");
@@ -65,5 +59,5 @@ public class DataGenSmsService {
 		}
 		return smsResponse;
 	}
-	
+
 }

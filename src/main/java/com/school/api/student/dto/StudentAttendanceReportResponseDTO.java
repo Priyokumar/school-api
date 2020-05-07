@@ -26,5 +26,5 @@ public class StudentAttendanceReportResponseDTO {
 	public void setApiMessage(ApiMessageDTO apiMessage) {
 		this.apiMessage = apiMessage;
 	}
-	
+
 }

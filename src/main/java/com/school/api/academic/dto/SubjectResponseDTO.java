@@ -23,5 +23,5 @@ public class SubjectResponseDTO {
 	public void setApiMessage(ApiMessageDTO apiMessage) {
 		this.apiMessage = apiMessage;
 	}
-	
+
 }

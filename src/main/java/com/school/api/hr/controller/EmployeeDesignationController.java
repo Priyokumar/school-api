@@ -33,7 +33,8 @@ public class EmployeeDesignationController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ActionResponseDTO> createDesignation(@Valid @RequestBody EmployeeDesignationDTO designationDTO) {
+	public ResponseEntity<ActionResponseDTO> createDesignation(
+			@Valid @RequestBody EmployeeDesignationDTO designationDTO) {
 		ActionResponseDTO response = designationService.createOrUpdateDesignation(designationDTO, null);
 		ResponseEntity<ActionResponseDTO> responseEntity = new ResponseEntity<ActionResponseDTO>(response,
 				HttpStatus.CREATED);
@@ -46,7 +47,8 @@ public class EmployeeDesignationController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ActionResponseDTO updateDesignation(@Valid @RequestBody EmployeeDesignationDTO designationDTO, @PathVariable("id") String id) {
+	public ActionResponseDTO updateDesignation(@Valid @RequestBody EmployeeDesignationDTO designationDTO,
+			@PathVariable("id") String id) {
 		return designationService.createOrUpdateDesignation(designationDTO, id);
 	}
 

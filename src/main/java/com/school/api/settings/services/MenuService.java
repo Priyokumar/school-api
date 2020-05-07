@@ -28,14 +28,14 @@ public class MenuService {
 	public MenusResponseDTO findAllMenus(String role) {
 
 		MenusResponseDTO res = new MenusResponseDTO();
-		
+
 		List<Menu> menus = new ArrayList<Menu>();
 
-		if(ScUtil.isAllPresent(role)) {
+		if (ScUtil.isAllPresent(role)) {
 			menus = menuRepository.findByRole(role);
-		}else {
+		} else {
 			menus = (List<Menu>) menuRepository.findAll();
-		}	
+		}
 
 		if (!ScUtil.isAllPresent(menus))
 			throw new NotFoundException("No menus can be found !");
@@ -89,8 +89,8 @@ public class MenuService {
 		if (ScUtil.isAllPresent(id)) {
 
 			Optional<Menu> menuOpt = menuRepository.findById(id);
-			
-			if(menuOpt.isPresent()) {
+
+			if (menuOpt.isPresent()) {
 				menu = menuOpt.get();
 			} else {
 				throw new NotFoundException("Menu not found");
@@ -166,7 +166,7 @@ public class MenuService {
 
 		return res;
 	}
-	
+
 	public ActionResponseDTO deleteMenu(String id) {
 
 		ActionResponseDTO res = new ActionResponseDTO();

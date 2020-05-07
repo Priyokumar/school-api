@@ -1,15 +1,15 @@
 package com.school.api.common.dto;
 
 public class DocumentBodyDTO {
-	
+
 	private Long id;
-	
+
 	private String docFor;
-	
+
 	private String type;
-	
+
 	private String name;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -41,5 +41,5 @@ public class DocumentBodyDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }

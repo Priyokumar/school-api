@@ -41,6 +41,5 @@ public class EmployeeAttendanceReportRequestDTO {
 	public void setEmpStatus(String empStatus) {
 		this.empStatus = empStatus;
 	}
-	
-	
+
 }

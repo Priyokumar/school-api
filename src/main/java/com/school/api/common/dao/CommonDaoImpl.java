@@ -147,10 +147,10 @@ public class CommonDaoImpl implements CommonDao {
 
 			predicates.add(predicate);
 		});
-		
+
 		Predicate[] predicateArr = predicates.toArray(new Predicate[predicates.size()]);
 
-		return  predicateArr;
+		return predicateArr;
 	}
 
 }

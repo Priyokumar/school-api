@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.school.api.settings.entity.Menu;
 
-public interface MenuRepository extends CrudRepository<Menu, String>{
+public interface MenuRepository extends CrudRepository<Menu, String> {
 
-	@Query(value="SELECT entity FROM Menu entity WHERE entity.role.id = :role")
-    List<Menu> findByRole(@Param("role") String role);
+	@Query(value = "SELECT entity FROM Menu entity WHERE entity.role.id = :role")
+	List<Menu> findByRole(@Param("role") String role);
 }

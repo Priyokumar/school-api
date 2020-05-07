@@ -21,6 +21,5 @@ public class EmployeeSalaryRequestDTO {
 	public void setEmpId(String empId) {
 		this.empId = empId;
 	}
-	
+
 }
-	

@@ -31,5 +31,5 @@ public class EmployeePayrollEarningDTO {
 	public void setValue(Double value) {
 		this.value = value;
 	}
-	
+
 }

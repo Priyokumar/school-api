@@ -181,5 +181,5 @@ public class StudentRequestParam {
 				+ ", community=" + community + ", nationality=" + nationality + ", aadhaarNo=" + aadhaarNo
 				+ ", physicallyChallenged=" + physicallyChallenged + "]";
 	}
-	
+
 }

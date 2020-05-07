@@ -31,5 +31,5 @@ public class EmployeePayrollDeductionDTO {
 	public void setValue(Double value) {
 		this.value = value;
 	}
-	
+
 }

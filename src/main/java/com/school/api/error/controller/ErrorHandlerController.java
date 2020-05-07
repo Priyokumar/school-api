@@ -29,10 +29,9 @@ public class ErrorHandlerController extends ResponseEntityExceptionHandler {
 		ErrorDetails errorDetails = new ErrorDetails(ex.getCode(), ex.getDetail(), ex.getStatus());
 		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 	@ExceptionHandler(BadRequestException.class)
-	public final ResponseEntity<ErrorDetails> handleBadRequestException(BadRequestException ex,
-			WebRequest request) {
+	public final ResponseEntity<ErrorDetails> handleBadRequestException(BadRequestException ex, WebRequest request) {
 		ErrorDetails errorDetails = new ErrorDetails(ex.getCode(), ex.getDetail(), ex.getStatus());
 		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}

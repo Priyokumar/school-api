@@ -5,7 +5,7 @@ import java.util.List;
 public class EmployeeAttendancesRequestDTO {
 
 	private String date;
-	
+
 	private List<EmployeeAttendanceRequestDTO> attendances;
 
 	public String getDate() {
@@ -23,5 +23,5 @@ public class EmployeeAttendancesRequestDTO {
 	public void setAttendances(List<EmployeeAttendanceRequestDTO> attendances) {
 		this.attendances = attendances;
 	}
-	
- }
+
+}

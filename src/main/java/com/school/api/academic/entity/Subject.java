@@ -16,45 +16,44 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "SC_SUBJECT")
 public class Subject implements Serializable {
 
-		private static final long serialVersionUID = 1L;
-		
-		@Id
-		@GeneratedValue(generator = "idGenerator")
-		@GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
-		@Column(name = "ID", nullable = false, length = 100)
-		private String id;
+	private static final long serialVersionUID = 1L;
 
-		@Column(name = "TITLE")
-		@NotBlank(message = "title is mandatory")
-		private String title;
-		
-		@Column(name = "IS_THEORY")
-		@NotNull(message = "isTheory is mandatory")
-		private Boolean isTheory;
+	@Id
+	@GeneratedValue(generator = "idGenerator")
+	@GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
+	@Column(name = "ID", nullable = false, length = 100)
+	private String id;
 
-		public String getId() {
-			return id;
-		}
+	@Column(name = "TITLE")
+	@NotBlank(message = "title is mandatory")
+	private String title;
 
-		public void setId(String id) {
-			this.id = id;
-		}
+	@Column(name = "IS_THEORY")
+	@NotNull(message = "isTheory is mandatory")
+	private Boolean isTheory;
 
-		public String getTitle() {
-			return title;
-		}
+	public String getId() {
+		return id;
+	}
 
-		public void setTitle(String title) {
-			this.title = title;
-		}
+	public void setId(String id) {
+		this.id = id;
+	}
 
-		public Boolean getIsTheory() {
-			return isTheory;
-		}
+	public String getTitle() {
+		return title;
+	}
 
-		public void setIsTheory(Boolean isTheory) {
-			this.isTheory = isTheory;
-		}
-		
-		
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Boolean getIsTheory() {
+		return isTheory;
+	}
+
+	public void setIsTheory(Boolean isTheory) {
+		this.isTheory = isTheory;
+	}
+
 }

@@ -34,7 +34,7 @@ public class EmployeeAttendanceController {
 	@GetMapping(value = "/report")
 	public EmployeeAttendanceReportResponseDTO findAttendanceReport(@RequestParam(name = "empType") String empType,
 			@RequestParam(name = "month") String month, @RequestParam(name = "year") String year) {
-		return attendanceService.findAttendanceReport(empType, month,year);
+		return attendanceService.findAttendanceReport(empType, month, year);
 	}
 
 	@PostMapping

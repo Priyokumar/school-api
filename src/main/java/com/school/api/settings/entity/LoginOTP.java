@@ -25,19 +25,19 @@ public class LoginOTP implements Serializable {
 
 	@Column(name = "USER_ID")
 	private Long userId;
-	
+
 	@Column(name = "OTP")
 	private Integer otp;
-	
+
 	@Column(name = "TIME_STAMP")
 	private Date timeStamp;
-	
+
 	@Column(name = "SMS_STATUS")
 	private String smsStatus;
-	
+
 	@Column(name = "SMS_ID")
 	private Long smsId;
-	
+
 	@Column(name = "STATUS")
 	private String status;
 
@@ -96,8 +96,5 @@ public class LoginOTP implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
 
-	
 }

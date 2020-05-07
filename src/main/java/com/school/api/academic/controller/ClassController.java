@@ -46,7 +46,8 @@ public class ClassController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ActionResponseDTO updateClass(@Valid @RequestBody ClassRequestDTO classRequestDTO, @PathVariable("id") String id) {
+	public ActionResponseDTO updateClass(@Valid @RequestBody ClassRequestDTO classRequestDTO,
+			@PathVariable("id") String id) {
 		return classService.createOrUpdateClass(classRequestDTO, id);
 	}
 

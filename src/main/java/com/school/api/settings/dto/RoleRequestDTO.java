@@ -8,9 +8,9 @@ public class RoleRequestDTO {
 	private String id;
 
 	private String name;
-	
+
 	private String desc;
-	
+
 	private List<String> menuIDs = new ArrayList<>();
 
 	public String getId() {
@@ -44,6 +44,5 @@ public class RoleRequestDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
 }

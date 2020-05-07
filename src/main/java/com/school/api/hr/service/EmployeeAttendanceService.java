@@ -35,11 +35,11 @@ public class EmployeeAttendanceService {
 
 	@Autowired
 	private CommonService commonService;
-	
+
 	public EmployeeAttendanceResponseDTO findAttendance(String empId, String dateStr) {
-		
+
 		EmployeeAttendanceResponseDTO res = new EmployeeAttendanceResponseDTO();
-		
+
 		Date date = ScDateUtil.stringToDate(dateStr);
 
 		Optional<EmployeeAttendance> attendanceOpt = attendanceRepository.findAttendanceByEmpAndDate(date, empId);
@@ -76,7 +76,7 @@ public class EmployeeAttendanceService {
 
 		return res;
 	}
-	
+
 	public EmployeeAttendanceDTO setAttendanceToDTO(EmployeeAttendance attendance) {
 
 		EmployeeAttendanceDTO attendanceDTO = new EmployeeAttendanceDTO();
@@ -88,7 +88,8 @@ public class EmployeeAttendanceService {
 		return attendanceDTO;
 	}
 
-	public EmployeeAttendance setAttendanceDTOToAttendance(EmployeeAttendanceRequestDTO attendanceRequestDTO, Date date) {
+	public EmployeeAttendance setAttendanceDTOToAttendance(EmployeeAttendanceRequestDTO attendanceRequestDTO,
+			Date date) {
 
 		EmployeeAttendance attendence = new EmployeeAttendance();
 		attendence.setAttendanceType(attendanceRequestDTO.getAttendanceType());
@@ -98,27 +99,25 @@ public class EmployeeAttendanceService {
 
 		return attendence;
 	}
-	
+
 	public EmployeeAttendanceReportResponseDTO findAttendanceReport(String empType, String month, String year) {
-		
+
 		EmployeeAttendanceReportResponseDTO res = new EmployeeAttendanceReportResponseDTO();
 
 		List<EmployeeAttendance> attendances = attendanceRepository.findAttendanceReport(empType, month, year);
 
 		if (!ScUtil.isAllPresent(attendances))
 			throw new NotFoundException("No attendances can be found !");
-		
+
 		System.out.println("\n\n Reports");
 		System.out.println(attendances);
-		
-		
-		List<EmployeeAttendanceReportDTO> reportsDTO = new ArrayList<EmployeeAttendanceReportDTO>();
 
+		List<EmployeeAttendanceReportDTO> reportsDTO = new ArrayList<EmployeeAttendanceReportDTO>();
 
 		res.setApiMessage(ApiUtilDTO.okMessage("Success"));
 		res.setData(reportsDTO);
 
 		return res;
 	}
-	
+
 }

@@ -34,10 +34,10 @@ public class Role implements Serializable {
 	@Column(name = "NAME")
 	@NotBlank(message = "name is mandatory")
 	private String name;
-	
+
 	@Column(name = "ROLE_DESC")
 	private String desc;
-	
+
 	@OneToMany(targetEntity = Menu.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")
 	@Fetch(value = FetchMode.SUBSELECT)
@@ -66,7 +66,7 @@ public class Role implements Serializable {
 	public void setMenus(List<Menu> menus) {
 		this.menus = menus;
 	}
-	
+
 	public String getDesc() {
 		return desc;
 	}

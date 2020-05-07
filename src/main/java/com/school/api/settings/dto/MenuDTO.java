@@ -10,13 +10,13 @@ public class MenuDTO {
 	private String title;
 
 	private String order;
-	
+
 	private String icon;
 
 	private String path;
-	
+
 	private Boolean hasSubmenu;
-	
+
 	private List<SubMenuDTO> subMenus = new ArrayList<>();
 
 	public String getId() {
@@ -74,6 +74,5 @@ public class MenuDTO {
 	public void setSubMenus(List<SubMenuDTO> subMenus) {
 		this.subMenus = subMenus;
 	}
-	
-	
+
 }

@@ -35,7 +35,8 @@ public class EmployeePayrollController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ActionResponseDTO> createPayroll(@Valid @RequestBody EmployeePayrollRequestDTO payrollRequestDTO) {
+	public ResponseEntity<ActionResponseDTO> createPayroll(
+			@Valid @RequestBody EmployeePayrollRequestDTO payrollRequestDTO) {
 		ActionResponseDTO response = payrollService.createOrUpdatePayroll(payrollRequestDTO, null);
 		ResponseEntity<ActionResponseDTO> responseEntity = new ResponseEntity<ActionResponseDTO>(response,
 				HttpStatus.CREATED);
@@ -48,7 +49,8 @@ public class EmployeePayrollController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ActionResponseDTO updatePayroll(@Valid @RequestBody EmployeePayrollRequestDTO payrollRequestDTO, @PathVariable("id") String id) {
+	public ActionResponseDTO updatePayroll(@Valid @RequestBody EmployeePayrollRequestDTO payrollRequestDTO,
+			@PathVariable("id") String id) {
 		return payrollService.createOrUpdatePayroll(payrollRequestDTO, id);
 	}
 

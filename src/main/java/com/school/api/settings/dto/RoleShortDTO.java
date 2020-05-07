@@ -5,7 +5,7 @@ public class RoleShortDTO {
 	private String id;
 
 	private String name;
-	
+
 	private String desc;
 
 	public String getId() {
@@ -31,6 +31,5 @@ public class RoleShortDTO {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	
-	
+
 }

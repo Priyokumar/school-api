@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.school.api.common.dto.ApiMessageDTO;
 
-
 public class RolesResponseDTO {
 
 	private List<RoleShortDTO> data;
@@ -26,7 +25,5 @@ public class RolesResponseDTO {
 	public void setApiMessage(ApiMessageDTO apiMessage) {
 		this.apiMessage = apiMessage;
 	}
-	
-	
 
 }

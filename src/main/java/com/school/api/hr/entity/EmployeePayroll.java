@@ -21,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "SC_EMP_PAY_ROLL")
-public class EmployeePayroll  implements Serializable {
+public class EmployeePayroll implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,37 +30,37 @@ public class EmployeePayroll  implements Serializable {
 	@GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
 	@Column(name = "ID", nullable = false, length = 100)
 	private String id;
-	
+
 	@Column(name = "STATUS")
 	private String status;
 
 	@Column(name = "YEAR")
 	private String year;
-	
+
 	@Column(name = "MONTH")
 	private String month;
-	
+
 	@Column(name = "TOTAL_EARNING")
 	private Double totalEarning;
-	
+
 	@Column(name = "TOTAL_DEDUCTION")
 	private Double totalDeduction;
-	
+
 	@Column(name = "GROSS_SALARY")
 	private Double grossSalary;
-	
+
 	@Column(name = "NET_SALARY")
 	private Double netSalary;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "EMPLOYEE")
 	private Employee employee;
-	
+
 	@OneToMany(targetEntity = EmployeePayrollEarning.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PAYROLL_ID", referencedColumnName = "ID")
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<EmployeePayrollEarning> earnings = new ArrayList<>();
-	
+
 	@OneToMany(targetEntity = EmployeePayrollDeduction.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PAYROLL_ID", referencedColumnName = "ID")
 	@Fetch(value = FetchMode.SUBSELECT)
@@ -153,6 +153,5 @@ public class EmployeePayroll  implements Serializable {
 	public void setDeductions(List<EmployeePayrollDeduction> deductions) {
 		this.deductions = deductions;
 	}
-	
 
 }

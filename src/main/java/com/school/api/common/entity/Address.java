@@ -40,14 +40,14 @@ public class Address implements Serializable {
 
 	@Column(name = "DISTRICT")
 	private String district;
-	
+
 	@OneToOne
-    @JoinColumn(name = "EMP_CORR_ADDRESS")
-    private Employee empCorrespondentAddress;
-	
+	@JoinColumn(name = "EMP_CORR_ADDRESS")
+	private Employee empCorrespondentAddress;
+
 	@OneToOne
-    @JoinColumn(name = "EMP_PERM_ADDRESS")
-    private Employee empPermanentAddress;
+	@JoinColumn(name = "EMP_PERM_ADDRESS")
+	private Employee empPermanentAddress;
 
 	public String getId() {
 		return id;

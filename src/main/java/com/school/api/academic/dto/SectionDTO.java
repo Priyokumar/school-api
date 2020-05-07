@@ -21,5 +21,5 @@ public class SectionDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 }

@@ -25,5 +25,5 @@ public class EmployeeDesignationsResponseDTO {
 	public void setApiMessage(ApiMessageDTO apiMessage) {
 		this.apiMessage = apiMessage;
 	}
-	
+
 }

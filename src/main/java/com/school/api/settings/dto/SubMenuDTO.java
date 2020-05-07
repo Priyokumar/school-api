@@ -7,7 +7,7 @@ public class SubMenuDTO {
 	private String title;
 
 	private String order;
-	
+
 	private String icon;
 
 	private String path;
@@ -51,6 +51,5 @@ public class SubMenuDTO {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	
+
 }

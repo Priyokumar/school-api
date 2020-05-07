@@ -5,7 +5,7 @@ public class SubjectDTO {
 	private String id;
 
 	private String title;
-	
+
 	private Boolean isTheory;
 
 	public String getId() {
@@ -31,6 +31,5 @@ public class SubjectDTO {
 	public void setIsTheory(Boolean isTheory) {
 		this.isTheory = isTheory;
 	}
-	
-	
+
 }

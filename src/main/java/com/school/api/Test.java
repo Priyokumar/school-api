@@ -13,8 +13,8 @@ public class Test {
 		int year = today.getYear();
 		int monthValue = today.getMonthValue();
 		int dayOfMonth = today.getDayOfMonth();
-		
-		String datePath = File.separator + year +File.separator + monthValue + File.separator + dayOfMonth ;
+
+		String datePath = File.separator + year + File.separator + monthValue + File.separator + dayOfMonth;
 
 		String fullPath = uploadPath + datePath;
 

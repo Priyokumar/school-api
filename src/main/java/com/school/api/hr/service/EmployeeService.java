@@ -45,22 +45,22 @@ public class EmployeeService {
 
 	@Autowired
 	private CommonService commonService;
-	
+
 	@Autowired
 	private IEmployeeRepository employeeRepository;
-	
+
 	@Autowired
 	private IEmployeeSalaryRepository employeeSalaryRepository;
-	
+
 	@Autowired
 	private DocUploadService docUploadService;
 
 	public EmployeesResponseDTO findAllEmployees(String type) {
 
 		EmployeesResponseDTO res = new EmployeesResponseDTO();
-		
+
 		List<Employee> employees = new ArrayList<Employee>();
-		
+
 		if (ScUtil.isAllPresent(type)) {
 			employees = employeeRepository.findEmployeeByType(type);
 		} else {
@@ -70,7 +70,6 @@ public class EmployeeService {
 		if (!ScUtil.isAllPresent(employees)) {
 			throw new NotFoundException("No employee found.");
 		}
-		
 
 		List<EmployeeDTO> employeesDTO = setEmployeesToDto(employees);
 
@@ -121,14 +120,14 @@ public class EmployeeService {
 		employeeDTO.setId(employee.getId());
 		employeeDTO.setEmpCode(employee.getEmpCode());
 		employeeDTO.setProfilePic(setDocDtoDoc(employee.getProfilePic()));
-		
+
 		EmployeeDesignation designation = employee.getDesignation();
-		if(ScUtil.isAllPresent(designation)) {
+		if (ScUtil.isAllPresent(designation)) {
 			employeeDTO.setDesignation(new EmployeeDesignationDTO());
 			employeeDTO.getDesignation().setId(designation.getId());
 			employeeDTO.getDesignation().setTitle(designation.getTitle());
 		}
-		
+
 		employeeDTO.setDob(ScDateUtil.dateToString(employee.getDob()));
 		employeeDTO.setEmail(employee.getEmail());
 		employeeDTO.setMobileNo(employee.getMobileNo());
@@ -222,7 +221,7 @@ public class EmployeeService {
 			Optional<Employee> employeeOpt = employeeRepository.findById(id);
 			if (!employeeOpt.isPresent())
 				throw new NotFoundException("No employee can be found !");
-			
+
 			employee = employeeOpt.get();
 		}
 
@@ -231,9 +230,9 @@ public class EmployeeService {
 		} else {
 			employee.setStatus("Active");
 		}
-		
+
 		EmployeeDesignationDTO designationDTO = employeeDTO.getDesignation();
-		if(ScUtil.isAllPresent(designationDTO)) {
+		if (ScUtil.isAllPresent(designationDTO)) {
 			employee.setDesignation(commonService.findById(designationDTO.getId(), EmployeeDesignation.class));
 		}
 		employee.setDob(ScDateUtil.stringToDate(employeeDTO.getDob()));
@@ -344,7 +343,7 @@ public class EmployeeService {
 		filters.add(new Filter("employee", Operator.EQUAL, FieldType.STRING, empId));
 
 		Optional<EmployeePayrollSalary> employeeOpt = employeeSalaryRepository.findByEmployee(empId);
-		
+
 		EmployeePayrollSalary employeeSalary = null;
 		if (!employeeOpt.isPresent()) {
 			employeeSalary = new EmployeePayrollSalary();
